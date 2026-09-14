@@ -1,3 +1,30 @@
+# Code-download scope
+# The downloadable project consists of code/, tools/, and the root run/build notes.
+# Local evidence, source materials, staging files, and process archives stay outside
+# the code download scope.
+
+# Local evidence, design documents, and reference materials
+/Report/
+/material/
+/PNG/
+/Reference/
+/submission_package_template/
+/logs_backup/
+/人工智能及应用大类其他人工智能应用赛道说明与提交要求.docx
+/智驭新风-数智链大赛参赛分析.md
+/CODE_REFACTOR_RECORD.md
+
+# Root-level report/material files
+/*.docx
+/*.pdf
+/*.ppt
+/*.pptx
+/*.mp4
+/*.mov
+/*.png
+/*.jpg
+/*.jpeg
+
 # Nested repositories and duplicate source mirror
 **/.git/
 /code/code/code/
@@ -15,6 +42,7 @@
 **/.venv/
 **/venv/
 **/*.egg-info/
+**/outputs/
 
 # Caches and temporary files
 **/__pycache__/
@@ -42,15 +70,12 @@
 **/*.log
 /code/code/DEBUG_ARCHIVE.md
 
-# Document/render work products; final evidence directories remain trackable
-/Report/_work/
-/codex/
+# Document/render work products
 **/render/
 **/rendered/
 **/render_output/
 **/render_artifacts/
 
-# Reproducible submission staging output
-/submission_package_template/
+# Local test workspaces
 /.venv/
 /.smoke/

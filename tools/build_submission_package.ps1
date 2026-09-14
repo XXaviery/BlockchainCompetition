@@ -46,14 +46,40 @@ foreach ($folder in $folderNames) {
     New-Item -ItemType Directory -Path (Join-Path $packageFull $folder) -Force | Out-Null
 }
 
+function Copy-IfMissing {
+    param(
+        [string]$Source,
+        [string]$Destination
+    )
+    if (-not (Test-Path -LiteralPath $Destination)) {
+        Copy-Item -LiteralPath $Source -Destination $Destination
+    }
+}
+
 $guideTarget = Join-Path $packageFull "01_作品文件\${workName}_安装与运行说明.md"
-Copy-Item -LiteralPath (Join-Path $projectRootPath 'SUBMISSION_GUIDE.md') -Destination $guideTarget
+Copy-IfMissing -Source (Join-Path $projectRootPath 'SUBMISSION_GUIDE.md') -Destination $guideTarget
 
 $placeholderText = @{
-    '02_作品展示' = "待补充：${workName}_演示视频.mp4 或 ${workName}_演示课件.ppt。单文件须控制在 500MB 以内。"
-    '03_设计文档' = "待后续文档阶段补充：${workName}_设计文档.pdf。本次代码封装不生成或修改最终设计文档。"
-    '04_作品信息' = "待填写真实学校与团队信息后补充：${workName}_信息概要表.pdf。不得使用占位信息提交。"
-    '05_承诺书' = "待全体成员使用真实信息签字扫描后补充：${workName}_承诺书.pdf。"
+    '02_作品展示' = @"
+状态：待补充
+正式材料：${workName}_演示视频.mp4 或 ${workName}_演示课件.ppt
+当前目录未放入正式作品展示材料；单文件须控制在 500MB 以内。
+"@
+    '03_设计文档' = @"
+状态：待补充
+正式材料：${workName}_设计文档.pdf
+当前目录未放入正式设计文档。
+"@
+    '04_作品信息' = @"
+状态：待补充
+正式材料：${workName}_信息概要表.pdf
+当前目录未放入正式作品信息；学校与团队信息须使用真实内容。
+"@
+    '05_承诺书' = @"
+状态：待补充
+正式材料：${workName}_承诺书.pdf
+当前目录未放入正式承诺书；签字页须使用全体成员真实信息。
+"@
 }
 foreach ($entry in $placeholderText.GetEnumerator()) {
     $path = Join-Path $packageFull "$($entry.Key)\待补充.txt"
@@ -83,6 +109,9 @@ function Get-InclusionDecision {
     $parts = $relative.Split('/')
     if ($SourceKind -eq 'hardware' -and $parts[0] -eq 'code') {
         return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = '重复内层仓库 code/code/code' }
+    }
+    if ($SourceKind -eq 'python' -and $parts[0] -eq 'outputs') {
+        return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = '运行输出与报告生成物，保留在本地工程并移至项目根 logs_backup 或本地输出目录' }
     }
     foreach ($part in $parts[0..([Math]::Max(0, $parts.Length - 2))]) {
         if ($excludedDirectoryNames -contains $part) {
@@ -151,30 +180,35 @@ $exclusionList = Join-Path $sourceFolder '排除文件清单.tsv'
 @( "来源`t相对路径`t排除原因" ) + ($exclusionRows | ForEach-Object { "$($_.Source)`t$($_.Path)`t$($_.Reason)" }) |
     Set-Content -LiteralPath $exclusionList -Encoding utf8
 
-$exclusionSummary = @"
+$exclusionSummary = @'
 # 源文件排除规则
 
-实际逐文件排除结果见 `排除文件清单.tsv`，共 $($exclusionRows.Count) 个文件。
+实际逐文件排除结果见 `排除文件清单.tsv`。
 
 - 版本与构建缓存：`.git/`、`.pio/`、`.vscode/`、`build/`、`install/`、`log/`、`dist/`、`codex/`。
 - Python/前端缓存：`__pycache__/`、`.pytest_cache/`、`.venv/`、`venv/`、`node_modules/`、`*.pyc`。
+- Python 运行输出：`outputs/`；原始日志记录副本位于项目根 `logs_backup/python_outputs_logs/`，不进入源码 ZIP。
 - 恢复与历史运行：`recovery/`、历史数据库 `*.db/*.sqlite*`、`DEBUG_ARCHIVE.md`。
 - 大体积或设备产物：`*.mcap`、固件备份目录 `backups/`、固件备份 `*.bin/*.elf/*.hex/*.uf2`、`*.log`。
 - 临时与渲染产物：`~$*`、`*~`、`*.tmp/*.temp/*.bak/*.old/*.swp/*.swo`、render 类目录。
 - 重复内层仓库：硬件源码根下的 `code/`，即原目录 `code/code/code/`；原目录未删除。
-"@
+'@
+$exclusionSummary = $exclusionSummary.Replace(
+    '实际逐文件排除结果见 `排除文件清单.tsv`。',
+    "实际逐文件排除结果见 `排除文件清单.tsv`，共 $($exclusionRows.Count) 个文件。"
+)
 Set-Content -LiteralPath (Join-Path $sourceFolder '排除规则说明.md') -Value $exclusionSummary -Encoding utf8
 
 $hashLines = foreach ($archive in @($pythonZip, $hardwareZip)) {
     $hash = Get-FileHash -LiteralPath $archive -Algorithm SHA256
     "$($hash.Hash.ToLowerInvariant())  $([IO.Path]::GetFileName($archive))"
 }
-Set-Content -LiteralPath (Join-Path $sourceFolder 'SHA256SUMS.txt') -Value $hashLines -Encoding ascii
+Set-Content -LiteralPath (Join-Path $sourceFolder 'SHA256SUMS.txt') -Value $hashLines -Encoding utf8
 
 $recordSource = Join-Path $projectRootPath 'CODE_REFACTOR_RECORD.md'
 $recordTarget = Join-Path $packageFull "07_过程记录\${workName}_代码封装与路径重构记录.md"
 if (Test-Path -LiteralPath $recordSource) {
-    Copy-Item -LiteralPath $recordSource -Destination $recordTarget
+    Copy-IfMissing -Source $recordSource -Destination $recordTarget
 }
 else {
     Set-Content -LiteralPath $recordTarget -Value '代码重构记录将在最终验证后补充。' -Encoding utf8

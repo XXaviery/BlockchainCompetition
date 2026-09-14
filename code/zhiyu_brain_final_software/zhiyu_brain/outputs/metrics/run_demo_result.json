@@ -1,6 +1,0 @@
-{
-  "completed_cycles": 3,
-  "final_state": "COMPLETED",
-  "db": "outputs/logs/brain.db",
-  "source_type": "SIMULATION / SOFTWARE-IN-THE-LOOP"
-}

@@ -1,2 +1,0 @@
-ndcg@3,precision@3,top1_accuracy,n_groups,mean_selected_utility_ranker,mean_selected_utility_rule,relative_improvement_percent
-0.9595783911173021,0.4927536231884058,0.927536231884058,138,0.6953001268648432,0.5056246269370923,37.51310553774698
