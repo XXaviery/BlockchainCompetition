@@ -4,7 +4,8 @@
 
 !/.gitignore
 !/README.md
-!/DEBUG_ARCHIVE.md
+# DEBUG_ARCHIVE.md is a historical machine/deployment archive and stays out
+# of the published source tree; the original file remains in the workspace.
 
 !/Web/
 !/Web/**

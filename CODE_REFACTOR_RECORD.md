@@ -2,7 +2,7 @@
 
 日期：2026-09-14  
 范围：只处理工程结构、可移植路径、提交暂存目录和运行说明。  
-状态：代码封装与验证已完成；学校全称、队长姓名仍待真实信息；未生成或修改最终设计文档。
+状态：代码封装、验证、Git 提交与远端推送已完成；学校全称、队长姓名仍待真实信息；未生成或修改最终设计文档。
 
 本文件用于后续重新生成设计文档时追溯工程变更，不是最终设计文档。
 
@@ -22,7 +22,8 @@
 本轮安全边界：
 
 - 没有执行递归删除，不删除 `code/code/code/` 原目录；该目录只在提交暂存包中排除。
-- 本轮检查时项目内没有根 `.git` 或嵌套 `.git` 可供删除；未以初始化 Git 为理由删除任何源文件。
+- 接手检查时项目内没有根 `.git` 或嵌套 `.git` 可供删除；本轮仅在验证完成后初始化根仓库，
+  未以初始化 Git 为理由删除任何源文件。
 - `Report/`、`material/`、`PNG/` 中的现有证据和文档未编辑。
 - 不调用训练、仿真数据生成或最终报告生成流程；不改报告数字、模型版本、指标字段、日志字段和输出文件名。
 
@@ -50,6 +51,7 @@ BlockchainCompetition/
 
 ```text
 BlockchainCompetition/
+├─ .git/                                      # 本轮初始化的根仓库
 ├─ .gitignore
 ├─ README.md
 ├─ SUBMISSION_GUIDE.md
@@ -286,6 +288,14 @@ submission_package_template/
 - `run_mof_web_console_remote.sh` 的 ROS 工作空间改为 `MOF_ROS_WS` 部署参数。
 - 提交生成器清单表头改为真实制表符，并保留人工补充文件；重跑时只删除并重建两个受管 ZIP。
 - `文件清单.tsv` 的自身条目不纳入校验范围，其余暂存文件均纳入 SHA-256/字节数清单。
+
+Git 记录：
+
+- 根仓库已初始化为 `main`，本轮提交为 `9fcdb64`（`refactor: package code and portable paths`）。
+- `origin` 已关联 `https://github.com/XXaviery/BlockchainCompetition.git`，推送结果为
+  `main -> main` 成功。
+- `DEBUG_ARCHIVE.md` 保留在工作区但不进入提交；`code/code/code/`、`.pio/`、recovery、
+  backups 和提交暂存目录未进入 Git 索引。
 
 以上修改均限于安装/路径/说明/提交封装；`Report/`、`material/`、`PNG/` 未修改。
 
