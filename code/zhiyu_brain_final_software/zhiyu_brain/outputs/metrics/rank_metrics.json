@@ -1,0 +1,9 @@
+{
+  "ndcg@3": 0.9595783911173021,
+  "precision@3": 0.4927536231884058,
+  "top1_accuracy": 0.927536231884058,
+  "n_groups": 138,
+  "mean_selected_utility_ranker": 0.6953001268648432,
+  "mean_selected_utility_rule": 0.5056246269370923,
+  "relative_improvement_percent": 37.51310553774698
+}

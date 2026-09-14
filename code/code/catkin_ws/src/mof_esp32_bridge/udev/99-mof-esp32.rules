@@ -1,0 +1,4 @@
+# MOF-Robot ESP32 CP2102 on the verified Raspberry Pi USB port.
+# The CP2102 reports the generic serial "0001", so also bind the physical path
+# to avoid claiming another adapter with the same VID/PID and serial.
+SUBSYSTEM=="tty", KERNEL=="ttyUSB*", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{serial}=="0001", ENV{ID_PATH}=="platform-xhci-hcd.1-usb-0:2:1.0", SYMLINK+="mof_esp32", GROUP="dialout", MODE="0660", TAG+="uaccess"

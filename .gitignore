@@ -1,0 +1,56 @@
+# Nested repositories and duplicate source mirror
+**/.git/
+/code/code/code/
+
+# Build and dependency outputs
+**/.pio/
+**/build/
+**/install/
+**/log/
+**/dist/
+**/node_modules/
+**/backups/
+**/codex/
+**/.vscode/
+**/.venv/
+**/venv/
+**/*.egg-info/
+
+# Caches and temporary files
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/*.py[cod]
+**/~$*
+**/*~
+**/*.tmp
+**/*.temp
+**/*.swp
+**/*.swo
+
+# Device, recovery, and historical runtime artifacts
+/code/code/recovery/
+**/*.mcap
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*.bin
+**/*.elf
+**/*.hex
+**/*.uf2
+**/*.log
+/code/code/DEBUG_ARCHIVE.md
+
+# Document/render work products; final evidence directories remain trackable
+/Report/_work/
+/codex/
+**/render/
+**/rendered/
+**/render_output/
+**/render_artifacts/
+
+# Reproducible submission staging output
+/submission_package_template/
+/.venv/
+/.smoke/

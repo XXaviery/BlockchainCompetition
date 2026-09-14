@@ -1,0 +1,52 @@
+# Ignore everything by default. This repository is intended to publish only
+# the ROS2 package, ESP32 firmware code, and top-level project docs.
+*
+
+!/.gitignore
+!/README.md
+!/DEBUG_ARCHIVE.md
+
+!/Web/
+!/Web/**
+
+!/tools/
+!/tools/chassis_tuner.py
+!/tools/ros_rotation_test.py
+!/tools/ros_safe_roundtrip_test.py
+!/tools/ros_manual_translation_test.py
+!/tools/ros_relative_ab_a_supervisor.py
+!/tools/web_console_acceptance.py
+
+!/catkin_ws/
+!/catkin_ws/**
+
+!/core/
+!/core/**
+
+# Python / ROS generated files
+**/__pycache__/
+**/__pycache__/**
+*.py[cod]
+
+/catkin_ws/build/
+/catkin_ws/install/
+/catkin_ws/log/
+
+# PlatformIO / ESP32 generated files
+/core/.pio/
+/core/.pio/**
+/core/.vscode/
+/core/.vscode/**
+
+# Local editor and system files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+.claude
+.codex
+advise.md
+pi.md
+start_pi.sh
+mof_room.pgm

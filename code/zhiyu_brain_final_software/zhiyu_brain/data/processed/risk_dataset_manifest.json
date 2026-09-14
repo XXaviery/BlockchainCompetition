@@ -1,0 +1,54 @@
+{
+  "dataset_version": "risk_dataset_v1",
+  "source": "SIMULATION",
+  "horizon_steps": 10,
+  "train_episodes": [
+    "scenario_1_kitchen_pm_spike_ep01",
+    "scenario_1_kitchen_pm_spike_ep02",
+    "scenario_1_kitchen_pm_spike_ep03",
+    "scenario_1_kitchen_pm_spike_ep04",
+    "scenario_1_kitchen_pm_spike_ep06",
+    "scenario_1_kitchen_pm_spike_ep07",
+    "scenario_1_kitchen_pm_spike_ep08",
+    "scenario_1_kitchen_pm_spike_ep09",
+    "scenario_1_kitchen_pm_spike_ep10",
+    "scenario_1_kitchen_pm_spike_ep11",
+    "scenario_2_bedroom_voc_rise_ep01",
+    "scenario_2_bedroom_voc_rise_ep02",
+    "scenario_2_bedroom_voc_rise_ep04",
+    "scenario_2_bedroom_voc_rise_ep05",
+    "scenario_2_bedroom_voc_rise_ep06",
+    "scenario_2_bedroom_voc_rise_ep08",
+    "scenario_2_bedroom_voc_rise_ep09",
+    "scenario_2_bedroom_voc_rise_ep11",
+    "scenario_3_multi_region_ep00",
+    "scenario_3_multi_region_ep03",
+    "scenario_3_multi_region_ep04",
+    "scenario_3_multi_region_ep05",
+    "scenario_3_multi_region_ep06",
+    "scenario_3_multi_region_ep07",
+    "scenario_3_multi_region_ep08"
+  ],
+  "val_episodes": [
+    "scenario_1_kitchen_pm_spike_ep00",
+    "scenario_1_kitchen_pm_spike_ep05",
+    "scenario_2_bedroom_voc_rise_ep00",
+    "scenario_3_multi_region_ep10",
+    "scenario_3_multi_region_ep11"
+  ],
+  "test_episodes": [
+    "scenario_2_bedroom_voc_rise_ep03",
+    "scenario_2_bedroom_voc_rise_ep07",
+    "scenario_2_bedroom_voc_rise_ep10",
+    "scenario_3_multi_region_ep01",
+    "scenario_3_multi_region_ep02",
+    "scenario_3_multi_region_ep09"
+  ],
+  "n_rows": 11520,
+  "split_counts": {
+    "train": 8000,
+    "test": 1920,
+    "val": 1600
+  },
+  "leakage_rule": "episode_id is atomic across train/val/test"
+}

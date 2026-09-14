@@ -1,0 +1,15 @@
+[
+  "current_risk",
+  "predicted_risk",
+  "trend_code",
+  "abnormal_duration",
+  "waiting_time",
+  "data_age",
+  "distance",
+  "estimated_move_time",
+  "estimated_energy",
+  "battery_soc",
+  "switch_cost",
+  "scene_weight",
+  "reachable"
+]

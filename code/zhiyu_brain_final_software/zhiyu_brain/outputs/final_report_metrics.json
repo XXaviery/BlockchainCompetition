@@ -1,0 +1,32 @@
+{
+  "source_type": "SIMULATION / SOFTWARE-IN-THE-LOOP",
+  "risk": {
+    "mae": 1.7899560516184143,
+    "rmse": 3.2672760249856347,
+    "r2": 0.8856446619695464,
+    "trend_accuracy": 0.796875,
+    "test_samples": 1920
+  },
+  "ranker": {
+    "ndcg_at_3": 0.9595783911173021,
+    "precision_at_3": 0.4927536231884058,
+    "top1_accuracy": 0.927536231884058,
+    "test_query_groups": 138
+  },
+  "policy_comparison": {
+    "ranker_mean_utility": 0.6953001268648432,
+    "rule_mean_utility": 0.5056246269370923,
+    "relative_improvement_percent": 37.51310553774698
+  },
+  "closed_loop": {
+    "completed_cycles": 3,
+    "final_state": "COMPLETED"
+  },
+  "gui_headless": {
+    "completed_cycles": 3,
+    "final_state": "COMPLETED"
+  },
+  "tests": {
+    "passed": 28
+  }
+}

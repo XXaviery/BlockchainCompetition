@@ -1,0 +1,10 @@
+version: rule_policy_v1
+weights:
+  current_risk: 0.35
+  predicted_risk: 0.30
+  rising_trend: 0.10
+  waiting_time: 0.10
+  abnormal_duration: 0.08
+  distance: -0.04
+  estimated_energy: -0.03
+  switch_cost: -0.04

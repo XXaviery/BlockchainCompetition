@@ -1,0 +1,8 @@
+{
+  "mode": "SIMULATION / SOFTWARE-IN-THE-LOOP",
+  "completed_cycles": 3,
+  "final_state": "COMPLETED",
+  "decision_id": "demo_decision_003",
+  "task_id": "task_003",
+  "db": "outputs/logs/brain.db"
+}

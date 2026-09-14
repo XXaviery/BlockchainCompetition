@@ -1,0 +1,20 @@
+version: ranker_v1
+objective: rank:ndcg
+n_estimators: 120
+max_depth: 4
+learning_rate: 0.06
+subsample: 0.9
+colsample_bytree: 0.9
+random_seed: 20260909
+utility:
+  alpha_risk_gain: 1.0
+  beta_response_cost: 0.18
+  gamma_energy_cost: 0.12
+  delta_switch_cost: 0.10
+  horizon_seconds: 600
+  purification_effect_pm25: 0.65
+  purification_effect_voc: 0.42
+  purification_effect_co2: 0.0
+relevance:
+  relevant_threshold: 3
+  grades: 5

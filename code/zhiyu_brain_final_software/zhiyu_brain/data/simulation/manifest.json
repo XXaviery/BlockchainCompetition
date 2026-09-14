@@ -1,0 +1,195 @@
+{
+  "dataset_version": "simulation_v1",
+  "source_type": "SIMULATION",
+  "random_seed": 20260909,
+  "scenarios": [
+    "scenario_1_kitchen_pm_spike",
+    "scenario_2_bedroom_voc_rise",
+    "scenario_3_multi_region"
+  ],
+  "episodes": [
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep00",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260909
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep01",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260910
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep02",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260911
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep03",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260912
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep04",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260913
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep05",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260914
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep06",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260915
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep07",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260916
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep08",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260917
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep09",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260918
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep10",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260919
+    },
+    {
+      "episode_id": "scenario_1_kitchen_pm_spike_ep11",
+      "scenario_id": "scenario_1_kitchen_pm_spike",
+      "seed": 20260920
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep00",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261909
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep01",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261910
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep02",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261911
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep03",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261912
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep04",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261913
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep05",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261914
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep06",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261915
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep07",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261916
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep08",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261917
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep09",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261918
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep10",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261919
+    },
+    {
+      "episode_id": "scenario_2_bedroom_voc_rise_ep11",
+      "scenario_id": "scenario_2_bedroom_voc_rise",
+      "seed": 20261920
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep00",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262909
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep01",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262910
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep02",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262911
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep03",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262912
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep04",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262913
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep05",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262914
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep06",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262915
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep07",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262916
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep08",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262917
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep09",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262918
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep10",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262919
+    },
+    {
+      "episode_id": "scenario_3_multi_region_ep11",
+      "scenario_id": "scenario_3_multi_region",
+      "seed": 20262920
+    }
+  ],
+  "n_env_samples": 12960,
+  "n_candidate_rows": 3744,
+  "note": "All records in this directory are generated by IndoorEnvironmentSimulator and are not real robot measurements."
+}

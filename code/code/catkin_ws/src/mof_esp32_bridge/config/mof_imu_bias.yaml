@@ -1,0 +1,7 @@
+imu_bias_corrector:
+  ros__parameters:
+    stationary_seconds: 5.0
+    recalibration_min_interval: 30.0
+    slow_update_alpha: 0.001
+    motion_epsilon: 0.001
+    encoder_epsilon: 0.5

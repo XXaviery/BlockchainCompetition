@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+    <title>Intelligence Designed To Evolve</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://db.onlinewebfonts.com/c/8cb707a9b8a73f8a7403336b861c3074?family=BubbledotICG-FinePos"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="bg" aria-hidden="true">
+      <video class="bg-video" autoplay muted loop playsinline>
+        <source
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260809_012548_ef22562c-c0ae-4816-ad9d-f8922af4e6a7.mp4"
+          type="video/mp4"
+        />
+      </video>
+    </div>
+
+    <div class="page">
+      <header class="site-header">
+        <nav class="desktop-nav" aria-label="Primary navigation">
+          <a class="active" href="#home" aria-current="page">Home</a>
+          <a href="#product" data-console-open>Product</a>
+          <a href="#case-studies">Case Studies</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </header>
+
+      <main class="hero" id="home">
+        <h1 class="headline anim">
+          <span>Intelligence</span>
+          <span>Designed To Evolve</span>
+        </h1>
+
+        <p class="subhead anim" style="--d: 0.28s">
+          Build applications that reason, adapt and collaborate using a modular<br />
+          AI platform designed for production.
+        </p>
+
+        <a class="cta anim" href="#product" data-console-open style="--d: 0.4s">Get Started</a>
+      </main>
+
+      <footer class="stats" aria-label="Platform statistics">
+        <div class="stat anim" style="--d: 0.5s">
+          <span class="stat-icon" aria-hidden="true">&lt;</span>
+          <span class="stat-value" data-target="120" data-suffix="ms" data-decimals="0">0ms</span>
+          <span class="stat-label">Inference Time</span>
+        </div>
+        <div class="stat anim" style="--d: 0.58s">
+          <span class="stat-icon" aria-hidden="true">%</span>
+          <span class="stat-value" data-target="99.99" data-suffix="%" data-decimals="2">0.00%</span>
+          <span class="stat-label">Platform Uptime</span>
+        </div>
+        <div class="stat anim" style="--d: 0.66s">
+          <span class="stat-icon" aria-hidden="true">*</span>
+          <span class="stat-value" data-target="24" data-suffix="/7" data-decimals="0">0/7</span>
+          <span class="stat-label">Autonomous Runtime</span>
+        </div>
+        <div class="stat anim" style="--d: 0.74s">
+          <span class="stat-icon" aria-hidden="true">#</span>
+          <span class="stat-value" data-target="2.4" data-suffix="M" data-decimals="1">0.0M</span>
+          <span class="stat-label">Context Windows</span>
+        </div>
+      </footer>
+
+      <div class="mobile-overlay" id="mobile-menu" hidden>
+        <nav class="mobile-sheet" aria-label="Mobile navigation">
+          <a class="active" href="#home" aria-current="page">Home</a>
+          <a href="#product" data-console-open>Product</a>
+          <a href="#case-studies">Case Studies</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </div>
+
+    <section
+      class="control-console"
+      id="robot-console"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="console-title"
+      hidden
+    >
+      <div class="console-shell">
+        <header class="console-header">
+          <div class="console-heading">
+            <div>
+              <span class="console-kicker">MOF / CONTROL CORE</span>
+              <h2 id="console-title">Robot Control</h2>
+              <span class="console-mode" id="console-mode" data-mode="preview">PREVIEW · NO CONTROL</span>
+            </div>
+          </div>
+          <div class="console-actions">
+            <span class="connection-pill" data-state="checking">
+              <span class="connection-dot"></span>
+              <span id="connection-label">Checking link</span>
+            </span>
+            <button class="console-close" type="button" aria-label="Close robot controls">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </div>
+        </header>
+
+        <div class="console-grid">
+          <section class="console-panel motion-panel" aria-labelledby="motion-title">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-index">01</span>
+                <h3 id="motion-title">Manual Motion</h3>
+              </div>
+              <span class="hold-hint"><span></span> Hold to move</span>
+            </div>
+
+            <div class="motion-layout">
+              <div class="control-pad" aria-label="Robot movement controls">
+                <button class="motion-key key-forward" type="button" data-motion="forward" aria-label="Forward">
+                  <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+                  <span>Forward</span>
+                  <kbd>W</kbd>
+                </button>
+                <button class="motion-key key-rotate-left" type="button" data-motion="rotate-left" aria-label="Rotate counterclockwise">
+                  <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                  <span>Rotate</span>
+                  <kbd>Q</kbd>
+                </button>
+                <button class="motion-key key-left" type="button" data-motion="left" aria-label="Move left">
+                  <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                  <span>Left</span>
+                  <kbd>A</kbd>
+                </button>
+                <button class="motion-key key-stop" type="button" data-motion="stop" aria-label="Stop robot">
+                  <i class="fa-solid fa-stop" aria-hidden="true"></i>
+                  <span>Stop</span>
+                  <kbd>Space</kbd>
+                </button>
+                <button class="motion-key key-right" type="button" data-motion="right" aria-label="Move right">
+                  <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  <span>Right</span>
+                  <kbd>D</kbd>
+                </button>
+                <button class="motion-key key-rotate-right" type="button" data-motion="rotate-right" aria-label="Rotate clockwise">
+                  <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+                  <span>Rotate</span>
+                  <kbd>E</kbd>
+                </button>
+                <button class="motion-key key-backward" type="button" data-motion="backward" aria-label="Backward">
+                  <i class="fa-solid fa-arrow-down" aria-hidden="true"></i>
+                  <span>Backward</span>
+                  <kbd>S</kbd>
+                </button>
+              </div>
+
+              <div class="speed-stack">
+                <div class="speed-control">
+                  <label for="linear-speed">
+                    <span>Forward speed</span>
+                    <output id="linear-output" for="linear-speed">0.20 m/s</output>
+                  </label>
+                  <input id="linear-speed" type="range" min="0.10" max="0.50" step="0.01" value="0.20" />
+                  <div class="range-scale"><span>0.10</span><span>0.50</span></div>
+                </div>
+                <div class="speed-control">
+                  <label for="lateral-speed">
+                    <span>Lateral speed</span>
+                    <output id="lateral-output" for="lateral-speed">0.30 m/s</output>
+                  </label>
+                  <input id="lateral-speed" type="range" min="0.10" max="0.60" step="0.01" value="0.30" />
+                  <div class="range-scale"><span>0.10</span><span>0.60</span></div>
+                </div>
+                <div class="speed-control">
+                  <label for="angular-speed">
+                    <span>Rotation speed</span>
+                    <output id="angular-output" for="angular-speed">0.35 rad/s</output>
+                  </label>
+                  <input id="angular-speed" type="range" min="0.05" max="1.00" step="0.01" value="0.35" />
+                  <div class="range-scale"><span>0.05</span><span>1.00</span></div>
+                </div>
+
+                <div class="command-readout" aria-live="polite">
+                  <span>COMMAND VECTOR</span>
+                  <strong id="command-vector">vx 0.00 · vy 0.00 · ω 0.00</strong>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="console-panel bag-panel" aria-labelledby="bag-title">
+            <div class="panel-heading">
+              <div>
+                <span class="panel-index">02</span>
+                <h3 id="bag-title">navigation</h3>
+              </div>
+              <button class="icon-button" id="refresh-bags" type="button" aria-label="Refresh rosbag list">
+                <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+              </button>
+            </div>
+
+            <div class="bag-list" id="bag-list" role="listbox" aria-label="Available rosbags">
+              <div class="bag-empty">
+                <i class="fa-solid fa-circle-notch fa-spin" aria-hidden="true"></i>
+                <span>Scanning recordings…</span>
+              </div>
+            </div>
+
+            <div class="bag-player">
+              <div class="now-playing">
+                <span>SELECTED RECORDING</span>
+                <strong id="selected-bag-name">No rosbag selected</strong>
+                <small id="bag-play-state">Motion replay: /cmd_vel · allowlist: /chassis/debug · /tf · /wheel/odom</small>
+              </div>
+              <div class="player-controls">
+                <button class="player-button player-stop" id="bag-stop" type="button" aria-label="Stop replay" disabled>
+                  <i class="fa-solid fa-stop" aria-hidden="true"></i>
+                </button>
+                <button class="player-button player-primary" id="bag-play" type="button" aria-label="Play selected rosbag" disabled>
+                  <i class="fa-solid fa-play" aria-hidden="true"></i>
+                  <span>Play</span>
+                </button>
+                <button class="player-button" id="bag-pause" type="button" aria-label="Pause replay" disabled>
+                  <i class="fa-solid fa-pause" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <footer class="console-footer">
+          <span><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Safety chain · /cmd_vel_nav</span>
+          <span>Dead-man timeout · 300ms · operational modes are mutually exclusive</span>
+        </footer>
+      </div>
+      <div class="console-toast" id="console-toast" role="status" aria-live="polite"></div>
+    </section>
+
+    <script src="main.js"></script>
+  </body>
+</html>

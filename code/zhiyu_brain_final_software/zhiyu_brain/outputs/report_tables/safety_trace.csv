@@ -1,0 +1,7 @@
+timestamp,decision_id,task_id,region_id,event_type,input_task,result,reason,fallback
+2026-09-09T07:14:51.840426+00:00,demo_decision_001,,A,,,,constraints_passed,
+2026-09-09T07:14:51.841865+00:00,demo_decision_001,task_001,A,MODEL_ERROR,A,PASS,ranker unavailable / injected model error,RuleBasedPolicy
+2026-09-09T07:14:51.902972+00:00,demo_decision_002,,A,,,,constraints_passed,
+2026-09-09T07:14:51.904511+00:00,demo_decision_002,task_002,A,NORMAL,A,PASS,constraints_passed,none
+2026-09-09T07:14:51.965608+00:00,demo_decision_003,,A,,,,constraints_passed,
+2026-09-09T07:14:51.967195+00:00,demo_decision_003,task_003,A,NORMAL,A,PASS,constraints_passed,none

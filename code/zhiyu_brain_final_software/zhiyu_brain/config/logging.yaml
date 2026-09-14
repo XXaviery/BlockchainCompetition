@@ -1,0 +1,2 @@
+database: outputs/logs/brain.db
+csv_export_dir: outputs/logs/csv
