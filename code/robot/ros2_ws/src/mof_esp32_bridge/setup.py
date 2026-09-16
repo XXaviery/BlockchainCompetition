@@ -18,7 +18,7 @@ setup(
     install_requires=["setuptools"],
     zip_safe=True,
     maintainer="MOF Robot",
-    maintainer_email="pi@localhost",
+    maintainer_email="mof-robot@localhost",
     description="ROS2 cmd_vel to MOF ESP32 serial velocity bridge.",
     license="MIT",
     entry_points={

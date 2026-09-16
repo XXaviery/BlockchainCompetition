@@ -1,8 +1,8 @@
 [CmdletBinding()]
 param(
     [string]$ProjectRoot = (Split-Path -Parent $PSScriptRoot),
-    [string]$SchoolName = '学校全称',
-    [string]$CaptainName = '队长姓名',
+    [string]$SchoolName = '',
+    [string]$CaptainName = '',
     [string]$ProcessRecordPath = ''
 )
 
@@ -11,7 +11,7 @@ $workName = '智驭新风——基于环境风险预测与安全任务调度的�
 $invalidNameChars = [IO.Path]::GetInvalidFileNameChars()
 foreach ($value in @($SchoolName, $CaptainName)) {
     if ([string]::IsNullOrWhiteSpace($value) -or $value.IndexOfAny($invalidNameChars) -ge 0) {
-        throw 'SchoolName and CaptainName must be non-empty folder-name components.'
+        throw 'SchoolName and CaptainName are required packaging parameters.'
     }
 }
 
@@ -72,30 +72,27 @@ function Copy-IfMissing {
 
 Copy-IfMissing -Source (Join-Path $gitRootPath 'SUBMISSION_GUIDE.md') -Destination (Join-Path $packageFull "01_作品文件\${workName}_安装与运行说明.md")
 
-$placeholderText = @{
+$folderNotes = @{
     '02_作品展示' = @"
-状态：待补充
-正式材料：${workName}_演示视频.mp4 或 ${workName}_演示课件.ppt
-当前目录未放入正式作品展示材料；正式文件大小和格式以竞赛要求为准。
+目录用途：作品展示材料。
+当前代码工作区不包含展示视频或课件。
+正式材料的格式和内容以竞赛提交信息为准。
 "@
     '03_设计文档' = @"
-状态：待补充
-正式材料：${workName}_设计文档.pdf
-本轮不生成或修改最终设计文档。
+目录用途：设计文档材料。
+设计文档不属于代码工作区，内容以正式设计文档为准。
 "@
     '04_作品信息' = @"
-状态：待补充
-正式材料：${workName}_信息概要表.pdf
-学校和团队信息必须使用真实内容。
+目录用途：作品信息材料。
+代码工作区不记录未公开的报名身份信息。
 "@
     '05_承诺书' = @"
-状态：待补充
-正式材料：${workName}_承诺书.pdf
-签字页必须使用全体成员真实信息。
+目录用途：承诺书材料。
+签署页记录实际签署信息。
 "@
 }
-foreach ($entry in $placeholderText.GetEnumerator()) {
-    $path = Join-Path $packageFull "$($entry.Key)\待补充.txt"
+foreach ($entry in $folderNotes.GetEnumerator()) {
+    $path = Join-Path $packageFull "$($entry.Key)\目录说明.txt"
     if (-not (Test-Path -LiteralPath $path)) {
         Set-Content -LiteralPath $path -Value $entry.Value -Encoding utf8
     }
@@ -111,6 +108,7 @@ $excludedExtensions = @(
     '.mcap', '.db', '.sqlite', '.sqlite3', '.bin', '.elf', '.hex', '.uf2',
     '.tmp', '.temp', '.bak', '.old', '.log', '.pyc', '.pyo', '.swp', '.swo'
 )
+$excludedFileNames = @('advise.md', 'pi.md', 'mof_room.pgm')
 $exclusionRows = [Collections.Generic.List[object]]::new()
 $archiveFiles = [Collections.Generic.List[object]]::new()
 
@@ -141,17 +139,44 @@ function Get-InclusionDecision {
     if ($File.Name.StartsWith('~$') -or $File.Name.EndsWith('~')) {
         return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = '临时文件' }
     }
+    if ($excludedFileNames -contains $File.Name.ToLowerInvariant()) {
+        return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = '本地部署资料或地图文件' }
+    }
     if ($excludedExtensions -contains $File.Extension.ToLowerInvariant()) {
         return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = "排除扩展名 $($File.Extension)" }
     }
     return [pscustomobject]@{ Include = $true; Relative = $relative; Reason = '' }
 }
 
+function Get-TrackedSourceFiles {
+    param([string]$Prefix, [string]$Root)
+
+    $trackedPaths = @(& git '-c' "safe.directory=$gitRootPath" '-C' $gitRootPath 'ls-files' '--full-name' '--' $Prefix)
+    if ($LASTEXITCODE -ne 0) {
+        throw "Unable to read Git tracked files for $Prefix."
+    }
+    foreach ($trackedPath in $trackedPaths) {
+        if ([string]::IsNullOrWhiteSpace($trackedPath)) {
+            continue
+        }
+        $normalizedPath = $trackedPath.Trim().Replace('/', [IO.Path]::DirectorySeparatorChar)
+        $absolutePath = [IO.Path]::GetFullPath((Join-Path $gitRootPath $normalizedPath))
+        if (-not (Test-Path -LiteralPath $absolutePath -PathType Leaf)) {
+            throw "Tracked source file is missing from the working tree: $trackedPath"
+        }
+        $file = Get-Item -LiteralPath $absolutePath -Force
+        if ([IO.Path]::GetFullPath($file.DirectoryName).StartsWith([IO.Path]::GetFullPath($Root), [StringComparison]::OrdinalIgnoreCase)) {
+            $file
+        }
+    }
+}
+
 foreach ($source in @(
     [pscustomobject]@{ Root = $pythonRoot; Label = 'code/software'; Prefix = 'code/software' },
     [pscustomobject]@{ Root = $robotRoot; Label = 'code/robot'; Prefix = 'code/robot' }
 )) {
-    foreach ($file in Get-ChildItem -LiteralPath $source.Root -Recurse -Force -File | Sort-Object FullName) {
+    # 封装输入来自 Git 跟踪清单，工作树中的未跟踪文件不进入扫描和 ZIP。
+    foreach ($file in Get-TrackedSourceFiles -Prefix $source.Prefix -Root $source.Root | Sort-Object FullName) {
         $decision = Get-InclusionDecision -File $file -SourceRoot $source.Root -SourceLabel $source.Label
         if ($decision.Include) {
             $archiveFiles.Add([pscustomobject]@{ File = $file; Entry = "$($source.Prefix)/$($decision.Relative)" })
@@ -200,9 +225,11 @@ $exclusionSummary = @'
 
 实际逐文件排除结果见 `排除文件清单.tsv`，共 __EXCLUDED_COUNT__ 个文件。
 
+封装输入来自两个源码根的 Git 跟踪清单；未跟踪文件不进入扫描、清单或 ZIP。
+
 - 版本与构建缓存：`.git/`、`.pio/`、`build/`、`install/`、`log/`、`dist/`、`codex/`、`.vscode/`。
 - Python/前端缓存：`__pycache__/`、`.pytest_cache/`、`.venv/`、`venv/`、`node_modules/`、`*.egg-info/`、`*.pyc`。
-- 运行输出与历史运行：`outputs/`、`recovery/`、`backups/`、`codex/`、`DEBUG_ARCHIVE.md`。
+- 运行输出与历史运行：`outputs/`、`recovery/`、`backups/`、`codex/`、本地部署归档。
 - 历史数据库与设备产物：`*.db`、`*.sqlite*`、`*.mcap`、`*.bin`、`*.elf`、`*.hex`、`*.uf2`、`*.log`。
 - 临时与渲染产物：`~$*`、`*~`、`*.tmp`、`*.temp`、`*.bak`、`*.old`、`*.swp`、`*.swo`、render 类目录。
 - 重复内层仓库：机器人源码根下的 `code/`；迁移前副本保存在本地 `暂时存放/logs_backup/stage2_20260916/`，不进入 ZIP。
@@ -219,18 +246,15 @@ $recordTarget = Join-Path $packageFull '07_过程记录\目录归位过程记录
 if (Test-Path -LiteralPath $ProcessRecordPath -PathType Leaf) {
     Copy-Item -LiteralPath $ProcessRecordPath -Destination $recordTarget -Force
 }
-elseif (-not (Test-Path -LiteralPath $recordTarget)) {
-    Set-Content -LiteralPath $recordTarget -Value '阶段过程记录将在本地验收完成后补充。' -Encoding utf8
-}
 
 $statusText = @"
 提交根目录：项目根目录
 作品名称：$workName
 代码 Git 工作区：06_源文件
 材料、日志和备份：暂时存放
-学校全称和队长姓名当前为占位符，不得虚构；正式提交前必须替换为真实信息。
+报名身份信息以正式提交材料为准，代码工作区不记录未公开的身份信息。
 
-本轮只完成代码工程封装、可移植路径、Web 污染仿真演示和运行说明；未生成或修改最终设计文档。
+代码工程封装范围：可移植路径、Web 污染仿真演示和运行说明。设计文档生成与修改不属于脚本功能。
 "@
 Set-Content -LiteralPath (Join-Path $packageFull '07_过程记录\提交状态说明.txt') -Value $statusText -Encoding utf8
 
@@ -255,6 +279,7 @@ Set-Content -LiteralPath $manifestTarget -Value $manifestLines -Encoding utf8
     PublicSourceRootCount = 2
     ArchivedSourceFiles = $archiveFiles.Count
     ExcludedFiles = $exclusionRows.Count
+    UntrackedFilesSkipped = $true
     SourceZipMiB = [Math]::Round(((Get-Item -LiteralPath $sourceZip).Length / 1MB), 2)
-    PlaceholderIdentity = "$SchoolName / $CaptainName"
+    PackageIdentity = "$SchoolName / $CaptainName"
 } | ConvertTo-Json

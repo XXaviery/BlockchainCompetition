@@ -8,6 +8,8 @@ ROS2 上位机串口桥接节点，负责同一个 ESP32 串口上的三件事�
 
 上位机不再打印底盘编码器、PWM、目标速度等遥测日志，避免运行 Nav2/SLAM 时刷屏。
 
+包元数据中的维护者地址是本地构建标识，不表示公开联系邮箱。
+
 ## 源码根与部署参数
 
 本包在电脑源码树中的相对路径是 `ros2_ws/src/mof_esp32_bridge/`，上一级唯一源码根是 `code/robot/`。源码文档不依赖电脑上的固定盘符或用户目录。
@@ -19,10 +21,10 @@ export MOF_ROS_WS="${MOF_ROS_WS:-$HOME/ros2_ws}"
 export MOF_SERIAL_PORT="${MOF_SERIAL_PORT:-/dev/mof_esp32}"
 export MOF_MAP_PATH="${MOF_MAP_PATH:-$HOME/maps/mof_room_v2.yaml}"
 export MOF_RVIZ_CONFIG="${MOF_RVIZ_CONFIG:-$HOME/rviz2/rviz.rviz}"
-export MOF_VALIDATION_SCRIPT="${MOF_VALIDATION_SCRIPT:-/path/to/mof_ros_safe_roundtrip_test.py}"
+export MOF_VALIDATION_SCRIPT="${MOF_VALIDATION_SCRIPT:?set this to the deployed validation script}"
 ```
 
-文档后文出现的 `/dev/...`、`$HOME/...` 和实际 ROS 工作空间都表示设备侧运行参数，不是源码路径。
+文档后文出现的 `/dev/mof_esp32`、`/dev/ttyUSB1`、`$HOME/ros2_ws` 和 `$HOME/maps/` 都表示设备侧运行参数，不是源码路径。
 
 ## ESP32 速度帧
 
@@ -90,11 +92,11 @@ readlink -f /dev/mof_esp32
 
 所有launch和bridge默认使用`/dev/mof_esp32`。紧急诊断仍可显式指定实际设备，例如
 `port:=/dev/ttyUSB1`，但不得把临时编号重新写死到源码。若更换树莓派USB插口，先用
-`udevadm info --query=property --name=<设备>`重新确认`ID_PATH`并在电脑真源更新规则。
+`udevadm info --query=property --name=/dev/mof_esp32`重新确认`ID_PATH`并在电脑真源更新规则。
 
 回滚规则：保持机器人全零并整体停止launch，执行
 `sudo rm /etc/udev/rules.d/99-mof-esp32.rules`，reload/trigger后确认`/dev/mof_esp32`消失；
-再通过显式`port:=/dev/ttyUSBx`启动。源码回滚必须先在电脑完成并按白名单重新部署。
+再通过显式`port:=/dev/ttyUSB1`启动。源码回滚必须先在电脑完成并按白名单重新部署。
 
 裸 `esp32_bridge.launch.py` 只用于传感器只读诊断或维护，不能作为运动入口。
 需要发布任何运动命令时，必须整体启动唯一安全链：
@@ -120,7 +122,7 @@ ros2 launch mof_esp32_bridge esp32_bridge.launch.py port:=/dev/mof_esp32 baud:=9
 - 角速度单位：`rad/s`
 - 线加速度单位：`m/s^2`
 - 上电后需保持静止约 2 秒，状态有效后才发布 `/imu`
-- 三轴角速度已扣除本次上电测得的零偏
+- 三轴角速度已扣除当前上电测得的零偏
 - orientation 由六轴 Mahony PI 输出；roll/pitch 受重力约束
 - 六轴 IMU 没有绝对 yaw 参考，因此 yaw 仍会随时间缓慢漂移
 
@@ -182,10 +184,10 @@ ros2 launch mof_esp32_bridge esp32_bridge.launch.py port:=/dev/mof_esp32 baud:=9
 - `base_footprint -> base_link`
 - `base_footprint -> laser`
 
-当前实车确认的雷达安装方向：
+当前配置基线下的雷达安装方向：
 
 - `laser_yaw` 默认 `1.5707963`，即雷达坐标相对 `base_footprint` 旋转 90 度。
-- 校准依据：实车测试 `laser_yaw:=1.5707963` 时，实物目标在机器人 `+Y` 方向，RViz 中也落在 `+Y`，无可见角度偏差。
+- 部署时需要使用实物目标与 RViz 对照确认方向；本代码工程不提供实时传感器读数。
 - MS200 扫描点方向已在 bridge 中反转为 ROS LaserScan 约定，避免 RViz 左右镜像。
 
 ## 基础检查
@@ -221,13 +223,13 @@ ros2 daemon start
 
 ## 后续操作
 
-`advise.md` 建议的后续工作分成实车操作和仓库内配置两部分。仓库内已提供 Nav2 参数和启动文件：
+后续工作分成实车操作和仓库内配置两部分。仓库内已提供 Nav2 参数和启动文件：
 
 - `config/mof_nav2_params.yaml`
 - `launch/nav2_bringup.launch.py`
 - `launch/mof_nav_with_ekf.launch.py`
 
-推荐在树莓派上按下面顺序做只读验证；任何运动都必须改用完整安全入口。
+在树莓派上按下面顺序执行只读检查；任何运动都必须改用完整安全入口。
 
 ### 1. 启动完整安全链
 
@@ -369,7 +371,7 @@ ros2 launch mof_esp32_bridge safe_velocity.launch.py
 
 ## RViz 雷达方向确认
 
-`advise.md` 中 LaserScan 角度方向需要实车确认，不要盲改。
+LaserScan 角度方向需要在设备部署环境中确认；源码配置不替代实物方向检查。
 
 启动 bridge 后打开 RViz2：
 
@@ -377,7 +379,7 @@ ros2 launch mof_esp32_bridge safe_velocity.launch.py
 rviz2
 ```
 
-添加 `LaserScan`，topic 选 `/scan`。让机器人正面对一面墙，观察点云是否出现在机器人正前方：
+在 RViz 中选择 `LaserScan`，topic 设为 `/scan`。让机器人正面对一面墙，观察点云是否出现在机器人正前方：
 
 - 如果墙在 RViz 中也位于正前方，且左右物体也对应，保持当前配置。
 - 如果前后反了，优先检查 `laser_yaw`。
@@ -429,7 +431,7 @@ rviz2
 
 ## ROS 入口边界
 
-本包不发布直接串口速度帧入口。`setup.py` 只声明已存在且经过验证的 bridge、WASD、IMU
+本包不发布直接串口速度帧入口。`setup.py` 只声明包内现有的 bridge、WASD、IMU
 偏置和相对导航入口；所有运动命令仍必须进入既有 ROS 安全链。
 
 ## 底盘调试遥测

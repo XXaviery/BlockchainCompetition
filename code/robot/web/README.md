@@ -2,13 +2,20 @@
 
 `web/` is located under the hardware source root `code/robot/`. Run every source command below from that root; no fixed drive letter or user directory is required.
 
-The source paths are relative to that root. SSH host, ROS workspace, serial device, map/bag roots, evidence directory and HTTP ports are deployment parameters. Set them in the deployment shell, for example:
+The source paths are relative to that root. SSH host, ROS workspace, ROS setup script, point-bag directory, serial device, map/bag roots, evidence directory and HTTP ports are deployment parameters. Set them in the deployment shell, for example:
 
 ```bash
-export MOF_ROS_WS="${MOF_ROS_WS:-$HOME/ros2_ws}"
+export MOF_ROS_WS="${MOF_ROS_WS:?MOF_ROS_WS is required by the remote launcher}"
+export MOF_ROS_SETUP="${MOF_ROS_SETUP:?MOF_ROS_SETUP is required}"
+export MOF_PI_TARGET="${MOF_PI_TARGET:?MOF_PI_TARGET is required}"
+export MOF_POINTS_DIR="${MOF_POINTS_DIR:?MOF_POINTS_DIR must point to external bag data}"
 export MOF_SERIAL_PORT="${MOF_SERIAL_PORT:-/dev/mof_esp32}"
 export MOF_WEB_PORT="${MOF_WEB_PORT:-4173}"
+export MOF_BAG_ROOT="${MOF_BAG_ROOT:-$HOME/rosbags}"
+export MOF_EVIDENCE_DIR="${MOF_EVIDENCE_DIR:-$HOME/mof_evidence}"
 ```
+
+The remote launcher reads `MOF_POINTS_DIR` from the local deployment environment. It must point to an external directory whose point subdirectories contain `metadata.yaml` and at least one `.mcap`; the directory is not part of the public source tree. `MOF_BAG_ROOT` is used by direct `server.py` playback modes.
 
 The normal deployment entry point is one PC/WSL command:
 
@@ -16,9 +23,11 @@ The normal deployment entry point is one PC/WSL command:
 bash tools/start_mof_web_console.sh
 ```
 
-It stages the `web/` files and the default bag, starts the open-field ROS chain (Collision Monitor/StopZone bypassed), starts the combined console, and creates the local SSH tunnel. Open `http://127.0.0.1:4173`, then keep the script terminal open. Press `Ctrl+C` there to publish zero and stop only the processes owned by the launcher.
+It stages the `web/` files and the point bags selected by `MOF_POINTS_DIR`, starts the open-field ROS chain (Collision Monitor/StopZone bypassed), starts the combined console, and creates the local SSH tunnel. Open `http://127.0.0.1:4173`, then keep the script terminal open. Press `Ctrl+C` there to publish zero and stop only the processes owned by the launcher.
 
 The SSH host, remote ROS workspace, serial device, bag roots, evidence directory and HTTP port are deployment/runtime parameters. They are not project source paths. For a portable source-only check that needs no ROS or bag data, use the static preview below.
+
+For motion replay, set `MOF_BAG_PATH` to the selected bag path in the deployment shell.
 
 `web/server.py` also has four explicit modes. Operational modes bind only to loopback and are intended to be reached through an SSH local port forward.
 
@@ -31,11 +40,11 @@ python3 web/server.py --motion-only --host 127.0.0.1 --port 4173
 
 # Rosbag telemetry playback only: forces ROS_DOMAIN_ID=97
 python3 web/server.py --playback-only --host 127.0.0.1 --port 4173 \
-  --bag-root /path/to/bag/root --evidence-dir /path/to/evidence
+  --bag-root "$MOF_BAG_ROOT" --evidence-dir "$MOF_EVIDENCE_DIR"
 
 # Combined console: both panels, with motion/playback runtime interlock
 python3 web/server.py --console --host 127.0.0.1 --port 4173 \
-  --bag-root /path/to/bag/root --evidence-dir /path/to/evidence
+  --bag-root "$MOF_BAG_ROOT" --evidence-dir "$MOF_EVIDENCE_DIR"
 ```
 
 ## 污染态势仿真演示
@@ -93,7 +102,7 @@ All velocity, command, action and other topics are excluded by construction. The
 A bag whose `metadata.yaml` contains the exact topic `/cmd_vel` is classified as a motion bag (`has_motion`). Pressing Play on it drives the real robot along the recorded path:
 
 ```bash
-ros2 bag play <bag> --topics /cmd_vel --remap /cmd_vel:=/cmd_vel_nav
+ros2 bag play "$MOF_BAG_PATH" --topics /cmd_vel --remap /cmd_vel:=/cmd_vel_nav
 ```
 
 It runs in the default ROS domain (no `ROS_DOMAIN_ID` override) so the command flows through the normal velocity_smoother → bridge chain. Telemetry topics are never replayed in this mode. `--playback-only` mode cannot start motion replays (no ROS motion publisher).

@@ -3,7 +3,7 @@
   <name>mof_esp32_bridge</name>
   <version>0.1.0</version>
   <description>ROS2 cmd_vel to MOF ESP32 serial velocity bridge.</description>
-  <maintainer email="mof-robot@example.com">MOF Robot</maintainer>
+  <maintainer email="mof-robot@localhost">MOF Robot</maintainer>
   <license>MIT</license>
 
   <buildtool_depend>ament_python</buildtool_depend>

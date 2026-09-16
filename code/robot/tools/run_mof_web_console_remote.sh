@@ -9,6 +9,7 @@ stage_dir=$1
 serial_port=${2:-/dev/mof_esp32}
 web_port=${3:-4173}
 ros_workspace=${MOF_ROS_WS:-$HOME/ros2_ws}
+ros_setup=${MOF_ROS_SETUP:?MOF_ROS_SETUP is required}
 run_dir="$stage_dir/run"
 launch_pid=""
 launch_pgid=""
@@ -60,9 +61,9 @@ cleanup() {
 }
 trap cleanup INT TERM EXIT
 
-# ROS setup scripts are not nounset-clean; restore strict mode immediately.
+# ROS setup scripts are not nounset-clean; the setup path is a deployment parameter.
 set +u
-source /opt/ros/jazzy/setup.bash
+source "$ros_setup"
 source "$ros_workspace/install/setup.bash"
 set -u
 

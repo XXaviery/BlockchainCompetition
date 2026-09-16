@@ -1704,7 +1704,7 @@ button {
   }
 }
 
-/* Final console layer: keep the landing video continuous behind the workspace. */
+/* Hide the landing page while the console layer is open. */
 body.console-open .page {
   opacity: 0;
   pointer-events: none;
@@ -1920,7 +1920,7 @@ body.console-open .page {
   }
 }
 
-/* OpenAI frontend-skill composition pass */
+/* Add a contrast overlay above the page background. */
 .bg::after {
   position: absolute;
   z-index: 1;
@@ -2816,7 +2816,7 @@ body.console-open .page {
   }
 }
 
-/* Keep this block last: the control workspace shares the landing video. */
+/* Keep this block last: the control workspace shares the page background. */
 .site-header {
   justify-content: center;
 }

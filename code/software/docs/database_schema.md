@@ -209,11 +209,9 @@
 - `region_id`：区域标识（A/B/C/D）。
 - `payload_json`：完整原始 payload 的 JSON 镜像；typed columns 用于检索/回放。
 
-## 冲突处理
+## Schema 范围
 
-- Phase 1 原 schema：同名九表，仅 `timestamp/event_key/payload_json`。
-- Phase 2 原 schema：同名九表，但按表定义 typed columns。
-- 最终 schema：只保留 `BrainLogStore` 这一套实现；typed columns 合并进 `BrainLogStore`，Phase 2 `DatabaseService` 已删除。
+- 最终 schema 只保留 `BrainLogStore` 这一套实现；typed columns 合并进 `BrainLogStore`。
 - `BrainLogStore` 启动时检测旧 schema；若发现不兼容旧表，会重建为最终 schema。
 
 ## 真实性边界

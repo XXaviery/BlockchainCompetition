@@ -156,7 +156,7 @@ ros2 run tf2_ros tf2_echo odom base_footprint
 ```
 
 当前调试配置里 `collision_monitor` 的 StopZone 动作是 `stop`，不得为跑通链路改成
-`none`。任何非零测试必须依次通过同步 Gate、Gate 0 和真实障碍拦截 Gate。
+`none`。任何非零测试必须依次满足同步 Gate、Gate 0 和真实障碍拦截 Gate 的条件。
 
 ---
 

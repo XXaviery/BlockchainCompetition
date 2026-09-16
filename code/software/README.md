@@ -54,7 +54,7 @@ air-governance-gui --demo-headless --root .
 air-governance-evaluate --root .
 ```
 
-报告证据导出入口保留用于后续文档阶段，本次重构不执行：
+报告证据导出入口用于后续文档阶段；当前代码工程不执行报告生成：
 
 ```bash
 air-governance-export-evidence --root .
@@ -108,7 +108,7 @@ IndoorEnvironmentSimulator
 
 `services/gui_backend.py` 是 `UnifiedBrainRuntime` 的薄封装，不包含第二套风险公式、Ranker、规则打分、安全算法或状态机。
 
-本轮工程封装冻结并保留：RiskModel、RankerModel、RuleBasedPolicy、SafetySupervisor、TaskManager、TaskStateMachine、Mock adapters、现有模型版本、数据、指标字段、日志字段和输出文件名。不得为验证安装而重新训练模型、生成仿真数据或改写报告数字。
+工程封装保留并冻结：RiskModel、RankerModel、RuleBasedPolicy、SafetySupervisor、TaskManager、TaskStateMachine、Mock adapters、现有模型版本、数据、指标字段、日志字段和输出文件名。安装检查不重新训练模型、不生成仿真数据、不改写报告数字。
 
 ## 5. 目录职责
 

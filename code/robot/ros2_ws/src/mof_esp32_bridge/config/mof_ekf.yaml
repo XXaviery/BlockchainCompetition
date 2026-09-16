@@ -29,8 +29,8 @@ ekf_filter_node:
     odom0_relative: false
 
     # Mahony provides roll/pitch, but a six-axis IMU has no absolute yaw
-    # reference. This is the original raw-IMU configuration. The optional
-    # bias-corrector WIP is not required for the default EKF to publish odom.
+    # reference. This is the raw-IMU configuration. The bias-corrector is
+    # optional for the default EKF odometry path.
     imu0: /imu
     imu0_config: [false, false, false,
                   false, false, false,

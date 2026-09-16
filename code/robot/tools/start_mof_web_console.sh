@@ -3,7 +3,9 @@ set -Eeuo pipefail
 
 script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 project_root=$(cd -- "$script_dir/.." && pwd)
-pi_target=${MOF_PI_TARGET:-pi@192.168.196.227}
+pi_target=${MOF_PI_TARGET:?set MOF_PI_TARGET to the deployment target}
+ros_setup=${MOF_ROS_SETUP:?MOF_ROS_SETUP is required}
+ros_workspace=${MOF_ROS_WS:?MOF_ROS_WS is required}
 serial_port=${MOF_SERIAL_PORT:-/dev/mof_esp32}
 local_port=${MOF_WEB_PORT:-4173}
 remote_port=${MOF_WEB_REMOTE_PORT:-4173}
@@ -11,7 +13,7 @@ socket_path=${MOF_SSH_SOCKET:-/tmp/mof_web_console_${UID}.sock}
 # Points library: every subdirectory with metadata.yaml and at least one
 # .mcap is staged to the Pi under its own directory name, which becomes the
 # name shown in the web console bag list.
-points_root=${MOF_POINTS_DIR:-$project_root/recovery/points}
+points_root=${MOF_POINTS_DIR:?MOF_POINTS_DIR is required}
 stamp=$(date +%Y%m%d_%H%M%S)_$$
 remote_stage="/tmp/mof_web_console_$stamp"
 master_created=0
@@ -90,7 +92,7 @@ else
     printf 'WARN: removing stale SSH socket (no live master): %s\n' "$socket_path" >&2
     rm -f -- "$socket_path"
   fi
-  printf 'Connecting to %s (SSH may ask for your password once)...\n' "$pi_target"
+  printf 'Connecting to %s (SSH may request authentication once)\n' "$pi_target"
   ssh -M -S "$socket_path" -o ControlPersist=120m -o ConnectTimeout=8 \
     -o ServerAliveInterval=15 -o ServerAliveCountMax=4 \
     -o StrictHostKeyChecking=yes -Nf "$pi_target"
@@ -108,7 +110,9 @@ fi
   "$pi_target:$remote_stage/"
 "${scp_base[@]}" -r "${point_dirs[@]}" "$pi_target:$remote_stage/bags/"
 
-"${ssh_base[@]}" "chmod +x '$remote_stage/run_mof_web_console_remote.sh'; nohup setsid '$remote_stage/run_mof_web_console_remote.sh' '$remote_stage' '$serial_port' '$remote_port' >'$remote_stage/run_supervisor.log' 2>&1 </dev/null &"
+remote_ros_setup=$(printf '%q' "$ros_setup")
+remote_ros_workspace=$(printf '%q' "$ros_workspace")
+"${ssh_base[@]}" "chmod +x '$remote_stage/run_mof_web_console_remote.sh'; MOF_ROS_SETUP=$remote_ros_setup MOF_ROS_WS=$remote_ros_workspace nohup setsid '$remote_stage/run_mof_web_console_remote.sh' '$remote_stage' '$serial_port' '$remote_port' >'$remote_stage/run_supervisor.log' 2>&1 </dev/null &"
 remote_started=1
 
 ready=0

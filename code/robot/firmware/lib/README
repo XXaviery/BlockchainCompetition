@@ -1,46 +1,11 @@
 
-This directory is intended for project specific (private) libraries.
-PlatformIO will compile them to static libraries and link into the executable file.
+本目录存放固件工程的私有功能库。PlatformIO 将这些模块编译为静态库并链接到固件程序。
 
-The source code of each library should be placed in a separate directory
-("lib/your_library_name/[Code]").
+当前固件库按功能分别存放在以下目录：
 
-For example, see the structure of the following example libraries `Foo` and `Bar`:
+- `chassis/`：三轮底盘运动学、PID 和反馈安全状态。
+- `imu/`：IMU 初始化、采样和姿态数据处理。
+- `lidar/`：MS200 雷达帧解析和扫描数据处理。
+- `motor/`：电机、PWM 和编码器接口。
 
-|--lib
-|  |
-|  |--Bar
-|  |  |--docs
-|  |  |--examples
-|  |  |--src
-|  |     |- Bar.c
-|  |     |- Bar.h
-|  |  |- library.json (optional. for custom build options, etc) https://docs.platformio.org/page/librarymanager/config.html
-|  |
-|  |--Foo
-|  |  |- Foo.c
-|  |  |- Foo.h
-|  |
-|  |- README --> THIS FILE
-|
-|- platformio.ini
-|--src
-   |- main.c
-
-Example contents of `src/main.c` using Foo and Bar:
-```
-#include <Foo.h>
-#include <Bar.h>
-
-int main (void)
-{
-  ...
-}
-
-```
-
-The PlatformIO Library Dependency Finder will find automatically dependent
-libraries by scanning project source files.
-
-More information about PlatformIO Library Dependency Finder
-- https://docs.platformio.org/page/librarymanager/ldf.html
+PlatformIO Library Dependency Finder 根据固件源码中的头文件引用解析模块依赖。

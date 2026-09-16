@@ -99,7 +99,7 @@
 
 - CLI Demo：`scripts/run_demo.py`；结果文件 `outputs/metrics/run_demo_result.json`。
 - GUI headless：`scripts/run_gui.py --demo-headless`；结果文件 `outputs/metrics/gui_headless_result.json`。
-- 自动测试：`pytest -q`；冻结记录 `outputs/metrics/pytest_output.txt`。
+- 自动测试命令：`pytest -q`；运行环境可将命令输出保存为 `outputs/metrics/pytest_output.txt`，该文件不属于 Git 跟踪树。
 - 图：`08_closed_loop_timeline.png`、`09_safety_fallback.png`、`14_cycle_risk_change.png`。
 
 ## 正式图来源清单

@@ -1,18 +1,20 @@
 # 智驭新风——基于环境风险预测与安全任务调度的移动空气治理机器人：代码安装与运行说明
 
-本文件只说明代码工程、部署参数和验收方法，不是最终设计文档。本轮不生成或修改任何报告 DOCX。
+本文件只说明代码工程、部署参数和检查方法；报告 DOCX 不属于本代码工程。
 
 ## 1. 工程边界
 
-本文件位于 `06_源文件/` Git 工作区。公开源码固定为：
+本文件位于 `06_源文件/` Git 工作区。竞赛根目录下的公开源码路径固定为：
 
-- `code/software/`：唯一 Python 软件工程根目录。
-- `code/robot/`：唯一硬件、ROS2 和 Web 源码根目录。
-- `code/robot/firmware/`：ESP32 固件。
-- `code/robot/ros2_ws/src/mof_esp32_bridge/`：ROS2 技术包；包名不改。
-- `code/robot/web/`：Web 控制台和污染态势仿真演示。
+- `06_源文件/code/software/`：唯一 Python 软件工程根目录。
+- `06_源文件/code/robot/`：唯一硬件、ROS2 和 Web 源码根目录。
+- `06_源文件/code/robot/firmware/`：ESP32 固件。
+- `06_源文件/code/robot/ros2_ws/src/mof_esp32_bridge/`：ROS2 技术包；包名保持为 `mof_esp32_bridge`。
+- `06_源文件/code/robot/web/`：Web 控制台和污染态势仿真演示。
 
 竞赛根目录的 `01_作品文件/` 至 `07_过程记录/` 是提交目录；`暂时存放/` 用于保存报告、素材、参考文件、日志和迁移备份。`暂时存放/` 不属于竞赛提交材料，也不属于 GitHub 代码仓库。
+
+以下命令在 `06_源文件/` 工作区内执行，因此命令中的 `code/software/` 和 `code/robot/` 是工作区相对路径。
 
 ## 2. Python 软件
 
@@ -50,7 +52,7 @@ air-governance-export-evidence --root .
 python -m pytest -q
 ```
 
-`air-governance-export-evidence` 仅保留为既有证据导出入口，本轮不修改报告内容、不执行报告 DOCX 生成。
+`air-governance-export-evidence` 是既有证据导出入口；报告内容和 DOCX 生成不属于该命令的运行范围。
 
 ### 可移植路径
 
@@ -75,7 +77,7 @@ cd code/robot/firmware
 pio run
 ```
 
-上传时由部署环境显式提供端口，例如：
+上传时由部署环境显式提供端口：
 
 ```bash
 pio run -t upload --upload-port COM9
@@ -127,7 +129,7 @@ python3 web/server.py --host 127.0.0.1 --port 4173
 python3 web/server.py --pollution-demo --host 127.0.0.1 --port 4173
 ```
 
-污染演示只增加以下只读接口：
+污染演示只提供以下只读接口：
 
 ```text
 GET /api/pollution/catalog
@@ -140,7 +142,7 @@ GET /api/pollution/snapshot?scenario_id=scenario_1_pm25_spike&step=0&metric=pm25
 
 ## 6. 竞赛提交目录
 
-封装脚本按竞赛要求创建以下七个目录：
+封装脚本创建以下七个目录：
 
 ```text
 01_作品文件/
@@ -165,10 +167,10 @@ GET /api/pollution/snapshot?scenario_id=scenario_1_pm25_spike&step=0&metric=pm25
 暂时存放/        ← 本地材料与备份，不提交
 ```
 
-默认学校和队长信息为占位符，不得虚构；正式提交前由参赛者补充真实信息和正式材料。Git 工作区只上传公开代码、运行说明和必要的源码工程文件，不包含报告、素材、日志、恢复目录、构建产物、历史数据库、MCAP、固件备份、`start_pi.sh` 或重复内层仓库。
+报名身份信息以正式提交材料为准，代码工作区不记录未公开的身份信息。Git 工作区仅包含公开代码、运行说明和必要的源码工程文件，不包含报告、素材、日志、恢复目录、构建产物、历史数据库、MCAP、固件备份、`start_pi.sh` 或重复内层仓库。
 
 封装脚本在竞赛根目录检查七个两位数字目录，并把状态说明和文件清单写入 `07_过程记录/`。`.git` 位于 `06_源文件/`，不在竞赛根目录。
 
 ## 7. 冻结与验收边界
 
-本轮不重新训练模型、不生成新的仿真数据、不改变现有模型版本、指标数值、日志字段或输出文件名；RiskModel、RankerModel、RuleBasedPolicy、SafetySupervisor、TaskManager、TaskStateMachine、Mock adapters、ROS 安全链以及 `firmware/` 的运动学/PID/串口/雷达逻辑均保持冻结。`send_velocity_frame` 因声明目标不存在而从 ROS2 `setup.py` 中移除，未生成伪实现。
+安装和检查命令不重新训练模型、不生成新的仿真数据、不改变现有模型版本、指标数值、日志字段或输出文件名。RiskModel、RankerModel、RuleBasedPolicy、SafetySupervisor、TaskManager、TaskStateMachine、Mock adapters、ROS 安全链以及 `firmware/` 的运动学/PID/串口/雷达逻辑均保持冻结。当前 ROS2 `setup.py` 不声明 `send_velocity_frame`；包内没有对应源码入口。
