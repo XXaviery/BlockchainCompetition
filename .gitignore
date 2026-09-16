@@ -27,7 +27,7 @@
 
 # Nested repositories and duplicate source mirror
 **/.git/
-/code/code/code/
+/code/robot/code/
 
 # Build and dependency outputs
 **/.pio/
@@ -58,7 +58,7 @@
 **/*.swo
 
 # Device, recovery, and historical runtime artifacts
-/code/code/recovery/
+/code/robot/recovery/
 **/*.mcap
 **/*.db
 **/*.sqlite
@@ -68,7 +68,7 @@
 **/*.hex
 **/*.uf2
 **/*.log
-/code/code/DEBUG_ARCHIVE.md
+/code/robot/DEBUG_ARCHIVE.md
 
 # Document/render work products
 **/render/

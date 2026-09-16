@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "air-governance"
+version = "0.1.0"
+description = "智驭新风环境风险预测与安全任务调度软件工程"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=2.0",
+  "pandas>=2.2",
+  "scikit-learn>=1.6",
+  "xgboost>=3.0",
+  "PyYAML>=6.0",
+  "matplotlib>=3.9",
+  "shap>=0.48",
+  "Pillow>=10.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+air-governance-demo = "scripts.run_demo:main"
+air-governance-gui = "scripts.run_gui:main"
+air-governance-export-evidence = "scripts.export_report_evidence:main"
+air-governance-evaluate = "scripts.evaluate_models:main"
+
+[tool.setuptools]
+include-package-data = true
+packages = [
+  "app",
+  "scripts",
+  "services",
+  "ui",
+  "ui.pages",
+  "ui.widgets",
+  "air_governance",
+  "air_governance.adapters",
+  "air_governance.common",
+  "air_governance.decision",
+  "air_governance.interfaces",
+  "air_governance.labels",
+  "air_governance.logging",
+  "air_governance.models",
+  "air_governance.runtime",
+  "air_governance.safety",
+  "air_governance.sensing",
+  "air_governance.simulation",
+  "air_governance.state",
+  "air_governance.task",
+]
+
+[tool.setuptools.package-dir]
+app = "app"
+scripts = "scripts"
+services = "services"
+ui = "ui"
+"ui.pages" = "ui/pages"
+"ui.widgets" = "ui/widgets"
+air_governance = "src/air_governance"
+"air_governance.adapters" = "src/air_governance/adapters"
+"air_governance.common" = "src/air_governance/common"
+"air_governance.decision" = "src/air_governance/decision"
+"air_governance.interfaces" = "src/air_governance/interfaces"
+"air_governance.labels" = "src/air_governance/labels"
+"air_governance.logging" = "src/air_governance/logging"
+"air_governance.models" = "src/air_governance/models"
+"air_governance.runtime" = "src/air_governance/runtime"
+"air_governance.safety" = "src/air_governance/safety"
+"air_governance.sensing" = "src/air_governance/sensing"
+"air_governance.simulation" = "src/air_governance/simulation"
+"air_governance.state" = "src/air_governance/state"
+"air_governance.task" = "src/air_governance/task"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

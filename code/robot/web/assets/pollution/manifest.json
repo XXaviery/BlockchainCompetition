@@ -1,0 +1,57 @@
+{
+  "source_type": "SIMULATION",
+  "evidence_class": "DEMO_ONLY",
+  "real_measurement": false,
+  "seed": 20260999,
+  "generator": "pollution_demo._scenario_values; deterministic arithmetic",
+  "metrics": [
+    "pm25",
+    "voc",
+    "co2",
+    "temperature",
+    "humidity",
+    "current_risk",
+    "predicted_risk"
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "scenario_1_pm25_spike",
+      "title": "场景 1 · PM2.5 突增",
+      "description": "固定种子下，厨房区域出现 PM2.5 峰值并向邻域扩散。",
+      "file": "scenario_1_pm25_spike.json",
+      "steps": 10,
+      "regions": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "scenario_id": "scenario_2_voc_rise",
+      "title": "场景 2 · VOC 持续上升",
+      "description": "固定种子下，卧室 VOC 按时间步上升，其他区域保持低幅波动。",
+      "file": "scenario_2_voc_rise.json",
+      "steps": 10,
+      "regions": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    },
+    {
+      "scenario_id": "scenario_3_multi_region",
+      "title": "场景 3 · 多区域复合污染",
+      "description": "固定种子下，四个区域按不同梯度同步变化。",
+      "file": "scenario_3_multi_region.json",
+      "steps": 10,
+      "regions": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

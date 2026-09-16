@@ -1,0 +1,80 @@
+# Ignore everything by default. This repository is intended to publish only
+# the ROS2 package, ESP32 firmware code, and top-level project docs.
+*
+
+!/.gitignore
+!/README.md
+# DEBUG_ARCHIVE.md is a historical machine/deployment archive and stays out
+# of the published source tree; the original file remains in the workspace.
+
+!/web/
+!/web/**
+
+!/tools/
+!/tools/chassis_tuner.py
+!/tools/ros_rotation_test.py
+!/tools/ros_safe_roundtrip_test.py
+!/tools/ros_manual_translation_test.py
+!/tools/ros_relative_ab_a_supervisor.py
+!/tools/web_console_acceptance.py
+!/tools/pollution_demo_acceptance.py
+!/tools/start_mof_web_console.sh
+!/tools/run_mof_web_console_remote.sh
+!/tools/ros_direct_wheel_basic_supervisor.py
+!/tools/ros_wasd_passive_monitor.py
+!/tools/chassis_feedback_safety_host_test.cpp
+!/tools/host_stubs/
+!/tools/host_stubs/**
+
+!/ros2_ws/
+!/ros2_ws/**
+
+!/firmware/
+!/firmware/**
+
+# Python / ROS generated files
+**/__pycache__/
+**/__pycache__/**
+*.py[cod]
+
+/ros2_ws/build/
+/ros2_ws/install/
+/ros2_ws/log/
+
+# PlatformIO / ESP32 generated files
+/firmware/.pio/
+/firmware/.pio/**
+/firmware/.vscode/
+/firmware/.vscode/**
+
+# Local runtime, recovery, duplicate and device artifacts
+/recovery/
+/backups/
+/codex/
+/outputs/
+/code/
+/start_pi.sh
+**/*.mcap
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*.bin
+**/*.elf
+**/*.hex
+**/*.uf2
+**/*.log
+
+# Local editor and system files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Local deployment launcher contains machine credentials and stays outside Git.
+/start_pi.sh
+
+.claude
+.codex
+advise.md
+pi.md
+mof_room.pgm

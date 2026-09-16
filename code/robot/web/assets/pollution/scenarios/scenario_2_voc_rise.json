@@ -1,0 +1,616 @@
+{
+  "scenario_id": "scenario_2_voc_rise",
+  "title": "场景 2 · VOC 持续上升",
+  "description": "固定种子下，卧室 VOC 按时间步上升，其他区域保持低幅波动。",
+  "source_type": "SIMULATION",
+  "evidence_class": "DEMO_ONLY",
+  "real_measurement": false,
+  "seed": 20260999,
+  "metrics": [
+    "pm25",
+    "voc",
+    "co2",
+    "temperature",
+    "humidity",
+    "current_risk",
+    "predicted_risk"
+  ],
+  "regions": [
+    {
+      "region_id": "A",
+      "name": "客厅",
+      "x": 0.0,
+      "y": 0.0
+    },
+    {
+      "region_id": "B",
+      "name": "卧室",
+      "x": 4.0,
+      "y": 0.0
+    },
+    {
+      "region_id": "C",
+      "name": "厨房",
+      "x": 0.0,
+      "y": 4.0
+    },
+    {
+      "region_id": "D",
+      "name": "工作区",
+      "x": 4.0,
+      "y": 4.0
+    }
+  ],
+  "snapshots": [
+    {
+      "step": 0,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 0,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 18.19,
+          "voc": 0.24,
+          "co2": 585.0,
+          "temperature": 22.4,
+          "humidity": 45.0,
+          "current_risk": 17.49,
+          "predicted_risk": 19.49
+        },
+        {
+          "region_id": "B",
+          "step": 0,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 20.69,
+          "voc": 0.275,
+          "co2": 612.0,
+          "temperature": 22.75,
+          "humidity": 47.8,
+          "current_risk": 19.94,
+          "predicted_risk": 21.94
+        },
+        {
+          "region_id": "C",
+          "step": 0,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 23.19,
+          "voc": 0.31,
+          "co2": 639.0,
+          "temperature": 23.1,
+          "humidity": 50.6,
+          "current_risk": 22.4,
+          "predicted_risk": 24.4
+        },
+        {
+          "region_id": "D",
+          "step": 0,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 25.69,
+          "voc": 0.345,
+          "co2": 666.0,
+          "temperature": 23.45,
+          "humidity": 53.4,
+          "current_risk": 24.86,
+          "predicted_risk": 26.86
+        }
+      ]
+    },
+    {
+      "step": 1,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 1,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 18.44,
+          "voc": 0.25,
+          "co2": 589.0,
+          "temperature": 22.44,
+          "humidity": 45.6,
+          "current_risk": 17.83,
+          "predicted_risk": 19.98
+        },
+        {
+          "region_id": "B",
+          "step": 1,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 20.94,
+          "voc": 0.285,
+          "co2": 616.0,
+          "temperature": 22.79,
+          "humidity": 48.4,
+          "current_risk": 20.29,
+          "predicted_risk": 22.44
+        },
+        {
+          "region_id": "C",
+          "step": 1,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 23.44,
+          "voc": 0.32,
+          "co2": 643.0,
+          "temperature": 23.14,
+          "humidity": 51.2,
+          "current_risk": 22.75,
+          "predicted_risk": 24.9
+        },
+        {
+          "region_id": "D",
+          "step": 1,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 25.94,
+          "voc": 0.355,
+          "co2": 670.0,
+          "temperature": 23.49,
+          "humidity": 51.6,
+          "current_risk": 25.2,
+          "predicted_risk": 27.35
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 2,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 18.69,
+          "voc": 0.285,
+          "co2": 593.0,
+          "temperature": 22.48,
+          "humidity": 46.2,
+          "current_risk": 18.48,
+          "predicted_risk": 20.78
+        },
+        {
+          "region_id": "B",
+          "step": 2,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 21.19,
+          "voc": 0.515,
+          "co2": 620.0,
+          "temperature": 22.83,
+          "humidity": 49.0,
+          "current_risk": 23.28,
+          "predicted_risk": 25.58
+        },
+        {
+          "region_id": "C",
+          "step": 2,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 23.69,
+          "voc": 0.355,
+          "co2": 647.0,
+          "temperature": 23.18,
+          "humidity": 49.4,
+          "current_risk": 23.39,
+          "predicted_risk": 25.69
+        },
+        {
+          "region_id": "D",
+          "step": 2,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 26.19,
+          "voc": 0.39,
+          "co2": 674.0,
+          "temperature": 23.53,
+          "humidity": 52.2,
+          "current_risk": 25.85,
+          "predicted_risk": 28.15
+        }
+      ]
+    },
+    {
+      "step": 3,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 3,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 18.94,
+          "voc": 0.29,
+          "co2": 597.0,
+          "temperature": 22.52,
+          "humidity": 46.8,
+          "current_risk": 18.77,
+          "predicted_risk": 21.22
+        },
+        {
+          "region_id": "B",
+          "step": 3,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 21.44,
+          "voc": 0.715,
+          "co2": 624.0,
+          "temperature": 22.87,
+          "humidity": 47.2,
+          "current_risk": 25.9,
+          "predicted_risk": 28.35
+        },
+        {
+          "region_id": "C",
+          "step": 3,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 23.94,
+          "voc": 0.36,
+          "co2": 651.0,
+          "temperature": 23.22,
+          "humidity": 50.0,
+          "current_risk": 23.68,
+          "predicted_risk": 26.13
+        },
+        {
+          "region_id": "D",
+          "step": 3,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 26.44,
+          "voc": 0.395,
+          "co2": 678.0,
+          "temperature": 23.57,
+          "humidity": 52.8,
+          "current_risk": 26.14,
+          "predicted_risk": 28.59
+        }
+      ]
+    },
+    {
+      "step": 4,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 4,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 19.19,
+          "voc": 0.325,
+          "co2": 601.0,
+          "temperature": 22.56,
+          "humidity": 45.0,
+          "current_risk": 19.42,
+          "predicted_risk": 22.02
+        },
+        {
+          "region_id": "B",
+          "step": 4,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 21.69,
+          "voc": 0.945,
+          "co2": 628.0,
+          "temperature": 22.91,
+          "humidity": 47.8,
+          "current_risk": 28.89,
+          "predicted_risk": 31.49
+        },
+        {
+          "region_id": "C",
+          "step": 4,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 24.19,
+          "voc": 0.395,
+          "co2": 655.0,
+          "temperature": 23.26,
+          "humidity": 50.6,
+          "current_risk": 24.33,
+          "predicted_risk": 26.93
+        },
+        {
+          "region_id": "D",
+          "step": 4,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 26.69,
+          "voc": 0.43,
+          "co2": 682.0,
+          "temperature": 23.61,
+          "humidity": 53.4,
+          "current_risk": 26.78,
+          "predicted_risk": 29.38
+        }
+      ]
+    },
+    {
+      "step": 5,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 5,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 19.44,
+          "voc": 0.36,
+          "co2": 605.0,
+          "temperature": 22.6,
+          "humidity": 45.6,
+          "current_risk": 20.06,
+          "predicted_risk": 22.81
+        },
+        {
+          "region_id": "B",
+          "step": 5,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 21.94,
+          "voc": 1.175,
+          "co2": 632.0,
+          "temperature": 22.95,
+          "humidity": 48.4,
+          "current_risk": 31.88,
+          "predicted_risk": 34.63
+        },
+        {
+          "region_id": "C",
+          "step": 5,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 24.44,
+          "voc": 0.43,
+          "co2": 659.0,
+          "temperature": 23.3,
+          "humidity": 51.2,
+          "current_risk": 24.97,
+          "predicted_risk": 27.72
+        },
+        {
+          "region_id": "D",
+          "step": 5,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 26.94,
+          "voc": 0.465,
+          "co2": 686.0,
+          "temperature": 23.65,
+          "humidity": 51.6,
+          "current_risk": 27.43,
+          "predicted_risk": 30.18
+        }
+      ]
+    },
+    {
+      "step": 6,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 6,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 19.89,
+          "voc": 0.365,
+          "co2": 609.0,
+          "temperature": 22.64,
+          "humidity": 46.2,
+          "current_risk": 20.47,
+          "predicted_risk": 23.37
+        },
+        {
+          "region_id": "B",
+          "step": 6,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 23.39,
+          "voc": 1.375,
+          "co2": 636.0,
+          "temperature": 22.99,
+          "humidity": 49.0,
+          "current_risk": 35.25,
+          "predicted_risk": 38.15
+        },
+        {
+          "region_id": "C",
+          "step": 6,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 24.89,
+          "voc": 0.435,
+          "co2": 663.0,
+          "temperature": 23.34,
+          "humidity": 49.4,
+          "current_risk": 25.39,
+          "predicted_risk": 28.29
+        },
+        {
+          "region_id": "D",
+          "step": 6,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 27.39,
+          "voc": 0.47,
+          "co2": 690.0,
+          "temperature": 23.69,
+          "humidity": 52.2,
+          "current_risk": 27.84,
+          "predicted_risk": 30.74
+        }
+      ]
+    },
+    {
+      "step": 7,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 7,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 20.34,
+          "voc": 0.4,
+          "co2": 613.0,
+          "temperature": 22.68,
+          "humidity": 46.8,
+          "current_risk": 21.24,
+          "predicted_risk": 24.29
+        },
+        {
+          "region_id": "B",
+          "step": 7,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 24.84,
+          "voc": 1.605,
+          "co2": 640.0,
+          "temperature": 23.03,
+          "humidity": 47.2,
+          "current_risk": 38.98,
+          "predicted_risk": 42.03
+        },
+        {
+          "region_id": "C",
+          "step": 7,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 25.34,
+          "voc": 0.47,
+          "co2": 667.0,
+          "temperature": 23.38,
+          "humidity": 50.0,
+          "current_risk": 26.16,
+          "predicted_risk": 29.21
+        },
+        {
+          "region_id": "D",
+          "step": 7,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 27.84,
+          "voc": 0.505,
+          "co2": 694.0,
+          "temperature": 23.73,
+          "humidity": 52.8,
+          "current_risk": 28.61,
+          "predicted_risk": 31.66
+        }
+      ]
+    },
+    {
+      "step": 8,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 8,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 20.79,
+          "voc": 0.435,
+          "co2": 617.0,
+          "temperature": 22.72,
+          "humidity": 45.0,
+          "current_risk": 22.02,
+          "predicted_risk": 25.22
+        },
+        {
+          "region_id": "B",
+          "step": 8,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 26.29,
+          "voc": 1.835,
+          "co2": 644.0,
+          "temperature": 23.07,
+          "humidity": 47.8,
+          "current_risk": 42.71,
+          "predicted_risk": 45.91
+        },
+        {
+          "region_id": "C",
+          "step": 8,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 25.79,
+          "voc": 0.505,
+          "co2": 671.0,
+          "temperature": 23.42,
+          "humidity": 50.6,
+          "current_risk": 26.93,
+          "predicted_risk": 30.13
+        },
+        {
+          "region_id": "D",
+          "step": 8,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 28.29,
+          "voc": 0.54,
+          "co2": 698.0,
+          "temperature": 23.77,
+          "humidity": 53.4,
+          "current_risk": 29.38,
+          "predicted_risk": 32.58
+        }
+      ]
+    },
+    {
+      "step": 9,
+      "regions": [
+        {
+          "region_id": "A",
+          "step": 9,
+          "x": 0.0,
+          "y": 0.0,
+          "pm25": 21.24,
+          "voc": 0.44,
+          "co2": 621.0,
+          "temperature": 22.76,
+          "humidity": 45.6,
+          "current_risk": 22.43,
+          "predicted_risk": 25.78
+        },
+        {
+          "region_id": "B",
+          "step": 9,
+          "x": 4.0,
+          "y": 0.0,
+          "pm25": 27.74,
+          "voc": 2.035,
+          "co2": 648.0,
+          "temperature": 23.11,
+          "humidity": 48.4,
+          "current_risk": 46.08,
+          "predicted_risk": 49.43
+        },
+        {
+          "region_id": "C",
+          "step": 9,
+          "x": 0.0,
+          "y": 4.0,
+          "pm25": 26.24,
+          "voc": 0.51,
+          "co2": 675.0,
+          "temperature": 23.46,
+          "humidity": 51.2,
+          "current_risk": 27.34,
+          "predicted_risk": 30.69
+        },
+        {
+          "region_id": "D",
+          "step": 9,
+          "x": 4.0,
+          "y": 4.0,
+          "pm25": 28.74,
+          "voc": 0.545,
+          "co2": 702.0,
+          "temperature": 23.81,
+          "humidity": 51.6,
+          "current_risk": 29.79,
+          "predicted_risk": 33.14
+        }
+      ]
+    }
+  ]
+}

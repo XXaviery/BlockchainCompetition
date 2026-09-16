@@ -1,0 +1,21 @@
+project_name: air_governance
+random_seed: 20260909
+sample_interval_seconds: 30
+decision_interval_seconds: 30
+risk_horizon_seconds: 300
+rolling_window_seconds: 300
+short_window_seconds: 60
+min_task_risk: 25.0
+min_task_utility: 0.05
+minimum_dwell_seconds: 120
+switch_hysteresis: 0.08
+region_cooldown_seconds: 90
+recheck_settle_seconds: 30
+low_battery_threshold: 15.0
+fallback_on_model_error: true
+source_types: [REAL, SIMULATION, SYNTHETIC, REPLAY]
+regions:
+  A: {name: 客厅, x: 0.0, y: 0.0}
+  B: {name: 卧室, x: 4.0, y: 0.0}
+  C: {name: 厨房, x: 0.0, y: 4.0}
+  D: {name: 工作区, x: 4.0, y: 4.0}
