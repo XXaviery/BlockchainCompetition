@@ -32,3 +32,9 @@ def portable_path(path: Path, root: Path) -> str:
     except ValueError:
         # A deliberately external deployment path is not rewritten or guessed.
         return resolved_path.as_posix()
+
+
+def ensure_runtime_dirs(root: Path) -> None:
+    """Create only the ignored runtime directories needed by CLI output files."""
+    for relative in ("outputs/logs", "outputs/metrics"):
+        (root / relative).mkdir(parents=True, exist_ok=True)

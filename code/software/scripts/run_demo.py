@@ -2,7 +2,7 @@
 from __future__ import annotations
 import argparse
 import json
-from scripts._paths import add_root_argument, portable_path, resolve_cli_root
+from scripts._paths import add_root_argument, ensure_runtime_dirs, portable_path, resolve_cli_root
 from air_governance.runtime.software_loop import UnifiedBrainRuntime
 
 
@@ -11,6 +11,7 @@ def main(argv: list[str] | None = None) -> None:
     add_root_argument(parser)
     args = parser.parse_args(argv)
     root = resolve_cli_root(args)
+    ensure_runtime_dirs(root)
     for required in (root/'models/risk/model.json', root/'models/ranker/model.json'):
         if not required.exists():
             raise SystemExit('Models missing; run training pipeline first.')

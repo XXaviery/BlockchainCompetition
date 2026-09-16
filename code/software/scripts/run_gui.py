@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 import argparse, json, sys
-from scripts._paths import add_root_argument, portable_path, resolve_cli_root
+from scripts._paths import add_root_argument, ensure_runtime_dirs, portable_path, resolve_cli_root
 from services.gui_backend import GuiBackend
 
 
@@ -12,6 +12,7 @@ def main() -> int:
     add_root_argument(parser)
     args=parser.parse_args()
     root=resolve_cli_root(args)
+    ensure_runtime_dirs(root)
     backend=GuiBackend(root)
     if args.demo_headless:
         snap=backend.run_demo(3)
