@@ -17,8 +17,8 @@ class GuiBackend(UnifiedBrainRuntime):
     def _load_gui_metrics(self) -> dict:
         risk_path = self.root / 'outputs/metrics/risk_metrics.json'
         rank_path = self.root / 'outputs/metrics/rank_metrics.json'
-        risk = json.loads(risk_path.read_text(encoding='utf-8'))
-        rank = json.loads(rank_path.read_text(encoding='utf-8'))
+        risk = self._read_metrics(risk_path, self.root / 'models/risk/model_metadata.json')
+        rank = self._read_metrics(rank_path, self.root / 'models/ranker/model_metadata.json')
         return {
             'risk_mae': float(risk['mae']),
             'risk_rmse': float(risk['rmse']),
@@ -32,3 +32,16 @@ class GuiBackend(UnifiedBrainRuntime):
             'ranker_mean_utility': float(rank['mean_selected_utility_ranker']),
             'rule_mean_utility': float(rank['mean_selected_utility_rule']),
         }
+
+    @staticmethod
+    def _read_metrics(output_path: Path, metadata_path: Path) -> dict:
+        """Use run outputs when present, otherwise the frozen model metadata.
+
+        Output directories are intentionally ignored from Git and ZIP packages.
+        A clean clone must still be able to open the GUI, so the fallback reads
+        the metrics already stored alongside the immutable model assets without
+        recomputing or changing any metric value.
+        """
+        path = output_path if output_path.is_file() else metadata_path
+        payload = json.loads(path.read_text(encoding='utf-8'))
+        return payload.get('metrics', payload)

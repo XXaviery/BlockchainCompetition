@@ -59,6 +59,8 @@ GUI 不硬编码 MAE、RMSE、R²、Trend Accuracy、NDCG@3、Precision@3 或 To
 - `outputs/metrics/risk_metrics.json`
 - `outputs/metrics/rank_metrics.json`
 
+在全新 Git 克隆中，`outputs/` 不随公开代码包提交；GUI 会回退读取 `models/risk/model_metadata.json` 和 `models/ranker/model_metadata.json` 中随模型冻结的 `metrics` 字段。已有运行输出存在时仍优先读取原有 `outputs/metrics/` 文件，字段和指标口径不变。
+
 设计文档最终引用的数字以 `outputs/final_report_metrics.json` 为唯一冻结来源。
 
 ## 4. 状态机
