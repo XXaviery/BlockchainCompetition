@@ -6,7 +6,7 @@
 
 ## 1. 安装
 
-从竞赛项目根目录进入本目录：
+从 `06_源文件` Git 工作区进入本目录：
 
 ```powershell
 Set-Location code/software

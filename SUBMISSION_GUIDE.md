@@ -4,7 +4,7 @@
 
 ## 1. 工程边界
 
-从竞赛项目根目录看，公开源码固定为：
+本文件位于 `06_源文件/` Git 工作区。公开源码固定为：
 
 - `code/software/`：唯一 Python 软件工程根目录。
 - `code/robot/`：唯一硬件、ROS2 和 Web 源码根目录。
@@ -12,7 +12,7 @@
 - `code/robot/ros2_ws/src/mof_esp32_bridge/`：ROS2 技术包；包名不改。
 - `code/robot/web/`：Web 控制台和污染态势仿真演示。
 
-`Report/`、`material/`、`PNG/`、`Reference/`、`logs_backup/` 和 `submission_package_template/` 是本地材料、证据、备份或暂存目录，不是公开代码根目录。
+竞赛根目录的 `01_作品文件/` 至 `07_过程记录/` 是提交目录；`暂时存放/` 用于保存报告、素材、参考文件、日志和迁移备份。`暂时存放/` 不属于竞赛提交材料，也不属于 GitHub 代码仓库。
 
 ## 2. Python 软件
 
@@ -138,7 +138,7 @@ GET /api/pollution/snapshot?scenario_id=scenario_1_pm25_spike&step=0&metric=pm25
 
 带 ROS 的既有模式仍按 `code/robot/web/README.md` 使用：`--motion-only`、`--playback-only` 和 `--console`。运动控制令牌、序列号校验、300 ms 看门狗、BagManager 和既有安全链不因污染演示改变。
 
-## 6. 竞赛暂存目录
+## 6. 竞赛提交目录
 
 封装脚本按竞赛要求创建以下七个目录：
 
@@ -152,7 +152,22 @@ GET /api/pollution/snapshot?scenario_id=scenario_1_pm25_spike&step=0&metric=pm25
 07_过程记录/
 ```
 
-默认学校和队长信息为占位符，不得虚构；正式提交前由参赛者补充真实信息和正式材料。本轮代码 ZIP 只包含 `code/software` 与 `code/robot` 的公开源文件，不包含报告、素材、日志、恢复目录、构建产物、历史数据库、MCAP、固件备份、`start_pi.sh` 或重复内层仓库。
+竞赛根目录固定为：
+
+```text
+01_作品文件/
+02_作品展示/
+03_设计文档/
+04_作品信息/
+05_承诺书/
+06_源文件/       ← 本 Git 工作区
+07_过程记录/
+暂时存放/        ← 本地材料与备份，不提交
+```
+
+默认学校和队长信息为占位符，不得虚构；正式提交前由参赛者补充真实信息和正式材料。Git 工作区只上传公开代码、运行说明和必要的源码工程文件，不包含报告、素材、日志、恢复目录、构建产物、历史数据库、MCAP、固件备份、`start_pi.sh` 或重复内层仓库。
+
+封装脚本在竞赛根目录检查七个两位数字目录，并把状态说明和文件清单写入 `07_过程记录/`。`.git` 位于 `06_源文件/`，不在竞赛根目录。
 
 ## 7. 冻结与验收边界
 

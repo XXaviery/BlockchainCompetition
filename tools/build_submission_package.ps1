@@ -15,35 +15,52 @@ foreach ($value in @($SchoolName, $CaptainName)) {
     }
 }
 
-$projectRootPath = [IO.Path]::GetFullPath($ProjectRoot)
-if ([string]::IsNullOrWhiteSpace($ProcessRecordPath)) {
-    $ProcessRecordPath = Join-Path $projectRootPath 'logs_backup\stage2_20260916\CODE_REFACTOR_STAGE2_RECORD.md'
+$gitRootPath = [IO.Path]::GetFullPath($ProjectRoot)
+$submissionRoot = [IO.Path]::GetFullPath((Split-Path -Parent $gitRootPath))
+$temporaryRoot = Join-Path $submissionRoot '暂时存放'
+if ([IO.Path]::GetFileName($gitRootPath) -ne '06_源文件') {
+    throw "ProjectRoot must be the 06_源文件 Git workspace: $gitRootPath"
 }
-$pythonRoot = Join-Path $projectRootPath 'code\software'
-$robotRoot = Join-Path $projectRootPath 'code\robot'
-$submissionRoot = Join-Path $projectRootPath 'submission_package_template'
+if ([string]::IsNullOrWhiteSpace($ProcessRecordPath)) {
+    $ProcessRecordPath = Join-Path $temporaryRoot 'CODE_REFACTOR_STAGE3_RECORD.md'
+}
+$pythonRoot = Join-Path $gitRootPath 'code\software'
+$robotRoot = Join-Path $gitRootPath 'code\robot'
 $packageName = "$SchoolName-$CaptainName-$workName"
-$packageRoot = Join-Path $submissionRoot $packageName
+$packageFull = $submissionRoot
 
-foreach ($required in @($pythonRoot, $robotRoot, (Join-Path $projectRootPath 'SUBMISSION_GUIDE.md'))) {
+foreach ($required in @($pythonRoot, $robotRoot, (Join-Path $gitRootPath 'SUBMISSION_GUIDE.md'))) {
     if (-not (Test-Path -LiteralPath $required -PathType Container) -and -not (Test-Path -LiteralPath $required -PathType Leaf)) {
         throw "Required path not found: $required"
     }
-}
-
-$submissionFull = [IO.Path]::GetFullPath($submissionRoot).TrimEnd([IO.Path]::DirectorySeparatorChar)
-$packageFull = [IO.Path]::GetFullPath($packageRoot)
-if (-not $packageFull.StartsWith($submissionFull + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
-    throw "Unsafe package target: $packageFull"
 }
 
 $folderNames = @(
     '01_作品文件', '02_作品展示', '03_设计文档', '04_作品信息',
     '05_承诺书', '06_源文件', '07_过程记录'
 )
-New-Item -ItemType Directory -Path $packageFull -Force | Out-Null
+New-Item -ItemType Directory -Path $temporaryRoot -Force | Out-Null
 foreach ($folder in $folderNames) {
     New-Item -ItemType Directory -Path (Join-Path $packageFull $folder) -Force | Out-Null
+}
+
+# 旧版封装曾把状态文件和清单放在提交包根目录。将这两个脚本生成文件收纳到 07，
+# 使提交包根目录严格只保留竞赛要求的七个两位数字目录；其他未知根项目不静默处理。
+$processFolder = Join-Path $packageFull '07_过程记录'
+foreach ($legacyFileName in @('提交状态说明.txt', '文件清单.tsv')) {
+    $legacyPath = Join-Path $packageFull $legacyFileName
+    $legacyTarget = Join-Path $processFolder $legacyFileName
+    if (Test-Path -LiteralPath $legacyPath -PathType Leaf) {
+        Move-Item -LiteralPath $legacyPath -Destination $legacyTarget -Force
+    }
+}
+$allowedRootItems = @($folderNames + '暂时存放')
+$unexpectedRootItems = @(Get-ChildItem -LiteralPath $packageFull -Force | Where-Object {
+    $_.Name -notin $allowedRootItems
+})
+if ($unexpectedRootItems.Count -gt 0) {
+    $names = ($unexpectedRootItems | ForEach-Object { $_.Name }) -join ', '
+    throw "Project root must contain only 01_作品文件 through 07_过程记录 and 暂时存放; unexpected items: $names"
 }
 
 function Copy-IfMissing {
@@ -53,7 +70,7 @@ function Copy-IfMissing {
     }
 }
 
-Copy-IfMissing -Source (Join-Path $projectRootPath 'SUBMISSION_GUIDE.md') -Destination (Join-Path $packageFull "01_作品文件\${workName}_安装与运行说明.md")
+Copy-IfMissing -Source (Join-Path $gitRootPath 'SUBMISSION_GUIDE.md') -Destination (Join-Path $packageFull "01_作品文件\${workName}_安装与运行说明.md")
 
 $placeholderText = @{
     '02_作品展示' = @"
@@ -147,7 +164,8 @@ foreach ($source in @(
 
 Add-Type -AssemblyName System.IO.Compression
 Add-Type -AssemblyName System.IO.Compression.FileSystem
-$sourceFolder = Join-Path $packageFull '06_源文件'
+$sourceFolder = Join-Path $temporaryRoot '代码封装备份'
+New-Item -ItemType Directory -Path $sourceFolder -Force | Out-Null
 $sourceZip = Join-Path $sourceFolder "${workName}_代码源码.zip"
 if (Test-Path -LiteralPath $sourceZip) {
     Remove-Item -LiteralPath $sourceZip -Force
@@ -187,9 +205,9 @@ $exclusionSummary = @'
 - 运行输出与历史运行：`outputs/`、`recovery/`、`backups/`、`codex/`、`DEBUG_ARCHIVE.md`。
 - 历史数据库与设备产物：`*.db`、`*.sqlite*`、`*.mcap`、`*.bin`、`*.elf`、`*.hex`、`*.uf2`、`*.log`。
 - 临时与渲染产物：`~$*`、`*~`、`*.tmp`、`*.temp`、`*.bak`、`*.old`、`*.swp`、`*.swo`、render 类目录。
-- 重复内层仓库：机器人源码根下的 `code/`；迁移前副本保存在本地 `logs_backup/stage2_20260916/`，不进入 ZIP。
+- 重复内层仓库：机器人源码根下的 `code/`；迁移前副本保存在本地 `暂时存放/logs_backup/stage2_20260916/`，不进入 ZIP。
 - `start_pi.sh`：含设备登录凭据，仅保留在本地，不进入 Git 或 ZIP。
-- `Report/`、`material/`、`PNG/`、`Reference/` 不属于两个公开源码根，脚本不会扫描或复制它们。
+- `../暂时存放/Report/`、`../暂时存放/material/`、`../暂时存放/PNG/`、`../暂时存放/Reference/` 不属于两个公开源码根，脚本不会扫描或复制它们。
 '@
 $exclusionSummary = $exclusionSummary.Replace('__EXCLUDED_COUNT__', [string]$exclusionRows.Count)
 Set-Content -LiteralPath (Join-Path $sourceFolder '排除规则说明.md') -Value $exclusionSummary -Encoding utf8
@@ -197,7 +215,7 @@ Set-Content -LiteralPath (Join-Path $sourceFolder '排除规则说明.md') -Valu
 "$((Get-FileHash -LiteralPath $sourceZip -Algorithm SHA256).Hash.ToLowerInvariant())  $([IO.Path]::GetFileName($sourceZip))" |
     Set-Content -LiteralPath (Join-Path $sourceFolder 'SHA256SUMS.txt') -Encoding utf8
 
-$recordTarget = Join-Path $packageFull "07_过程记录\${workName}_代码重构过程记录.md"
+$recordTarget = Join-Path $packageFull '07_过程记录\目录归位过程记录.md'
 if (Test-Path -LiteralPath $ProcessRecordPath -PathType Leaf) {
     Copy-Item -LiteralPath $ProcessRecordPath -Destination $recordTarget -Force
 }
@@ -206,25 +224,34 @@ elseif (-not (Test-Path -LiteralPath $recordTarget)) {
 }
 
 $statusText = @"
-提交目录名称：$packageName
+提交根目录：项目根目录
+作品名称：$workName
+代码 Git 工作区：06_源文件
+材料、日志和备份：暂时存放
 学校全称和队长姓名当前为占位符，不得虚构；正式提交前必须替换为真实信息。
 
 本轮只完成代码工程封装、可移植路径、Web 污染仿真演示和运行说明；未生成或修改最终设计文档。
 "@
-Set-Content -LiteralPath (Join-Path $packageFull '提交状态说明.txt') -Value $statusText -Encoding utf8
+Set-Content -LiteralPath (Join-Path $packageFull '07_过程记录\提交状态说明.txt') -Value $statusText -Encoding utf8
 
-$manifestTarget = Join-Path $packageFull '文件清单.tsv'
+$manifestTarget = Join-Path $packageFull '07_过程记录\文件清单.tsv'
 $manifestLines = [Collections.Generic.List[string]]::new()
 $manifestLines.Add("SHA256`tBytes`tRelativePath")
-foreach ($file in Get-ChildItem -LiteralPath $packageFull -Recurse -Force -File | Where-Object { $_.FullName -ne $manifestTarget } | Sort-Object FullName) {
-    $relative = [IO.Path]::GetRelativePath($packageFull, $file.FullName).Replace('\', '/')
-    $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
-    $manifestLines.Add("$hash`t$($file.Length)`t$relative")
+foreach ($folder in @('01_作品文件', '02_作品展示', '03_设计文档', '04_作品信息', '05_承诺书', '07_过程记录')) {
+    $folderPath = Join-Path $packageFull $folder
+    foreach ($file in Get-ChildItem -LiteralPath $folderPath -Recurse -Force -File | Where-Object { $_.FullName -ne $manifestTarget } | Sort-Object FullName) {
+        $relative = [IO.Path]::GetRelativePath($packageFull, $file.FullName).Replace('\', '/')
+        $hash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+        $manifestLines.Add("$hash`t$($file.Length)`t$relative")
+    }
 }
+$manifestLines.Add("SEE_GIT`t-`t06_源文件/（Git 工作区，源文件由 Git 索引维护）")
 Set-Content -LiteralPath $manifestTarget -Value $manifestLines -Encoding utf8
 
 [pscustomobject]@{
-    PackageRoot = $packageFull
+    SubmissionRoot = $packageFull
+    GitRoot = $gitRootPath
+    TemporaryRoot = $temporaryRoot
     PublicSourceRootCount = 2
     ArchivedSourceFiles = $archiveFiles.Count
     ExcludedFiles = $exclusionRows.Count

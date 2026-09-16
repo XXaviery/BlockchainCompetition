@@ -1,6 +1,8 @@
 # 智驭新风——基于环境风险预测与安全任务调度的移动空气治理机器人
 
-本仓库只维护可公开的代码工程、可移植运行说明和提交封装脚本。本轮不生成或修改任何报告 DOCX，也不修改 `Report/`、`material/`、`PNG/`、`Reference/` 原始文件。
+本 Git 工作区位于竞赛目录的 `06_源文件/`，只维护可公开的代码工程、可移植运行说明和提交封装脚本。本轮不生成或修改任何报告 DOCX。
+
+代码证据仓库：[github.com/XXaviery/BlockchainCompetition](https://github.com/XXaviery/BlockchainCompetition)
 
 ## 公开代码根目录
 
@@ -32,12 +34,14 @@ python3 web/server.py --host 127.0.0.1 --port 4173 --pollution-demo
 
 固件和 ROS2 的入口、部署参数、安全链及测试命令见 [`SUBMISSION_GUIDE.md`](SUBMISSION_GUIDE.md)。
 
-## 提交封装
+## 竞赛目录
 
 ```powershell
 pwsh -File tools/build_submission_package.ps1
 ```
 
-默认生成带“学校全称”和“队长姓名”占位符的本地 `submission_package_template/`。该目录、`logs_backup/`、报告、素材和参考目录均保持本地并被忽略，不进入公开 Git。
+工程上一级目录是竞赛提交根目录，打开后只显示 `01_作品文件/` 至 `07_过程记录/` 七个目录和 `暂时存放/`。其中 `06_源文件/` 就是本 Git 工作区；报告、素材、参考文件、日志和迁移备份统一放在 `暂时存放/`，不进入 GitHub 代码仓库。
 
-迁移基线、重复内层仓库备份、阶段记录和验收结果保存在本地 `logs_backup/stage2_20260916/`，供后续重新生成设计文档使用。
+提交竞赛材料时只处理 `01_作品文件/` 至 `07_过程记录/`，不提交 `暂时存放/`。学校名称和队长姓名仍以正式信息为准，不在代码仓库中虚构。
+
+迁移基线、重复内层仓库备份、阶段记录和验收结果保存在上一级 `暂时存放/logs_backup/`。
