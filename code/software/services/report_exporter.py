@@ -42,13 +42,26 @@ class ReportExporter:
         self.tab_dir = self.root / 'outputs' / 'report_tables'
         self.fig_dir.mkdir(parents=True, exist_ok=True)
         self.tab_dir.mkdir(parents=True, exist_ok=True)
-        self.risk_metrics = json.loads((self.root/'outputs/metrics/risk_metrics.json').read_text(encoding='utf-8'))
-        self.rank_metrics = json.loads((self.root/'outputs/metrics/rank_metrics.json').read_text(encoding='utf-8'))
+        self.risk_metrics = self._read_metrics(
+            self.root / 'outputs/metrics/risk_metrics.json',
+            self.root / 'models/risk/model_metadata.json',
+        )
+        self.rank_metrics = self._read_metrics(
+            self.root / 'outputs/metrics/rank_metrics.json',
+            self.root / 'models/ranker/model_metadata.json',
+        )
         self.risk_model = RiskModel.load(self.root/'models/risk')
         self.rank_model = RankerModel.load(self.root/'models/ranker')
         self.risk_test = pd.read_csv(self.root/'data/processed/risk_dataset.csv').query("split == 'test'").copy()
         self.rank_test = pd.read_csv(self.root/'data/processed/rank_dataset.csv').query("split == 'test'").copy()
         self.manifest_rows: list[dict[str, Any]] = []
+
+    @staticmethod
+    def _read_metrics(output_path: Path, metadata_path: Path) -> dict[str, Any]:
+        """Prefer existing output metrics and fall back to frozen metadata."""
+        path = output_path if output_path.is_file() else metadata_path
+        payload = json.loads(path.read_text(encoding='utf-8'))
+        return payload.get('metrics', payload)
 
     def _fig(self):
         fig, ax = plt.subplots(figsize=(16, 9), dpi=100)
