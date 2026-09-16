@@ -1,6 +1,6 @@
 # 智驭新风——基于环境风险预测与安全任务调度的移动空气治理机器人
 
-本 Git 工作区位于竞赛目录的 `06_源文件/`，维护可公开的代码工程、可移植运行说明和提交封装脚本。报告 DOCX 不属于本工作区。
+本 Git 工作区维护代码工程、可移植运行说明和辅助工具。
 
 ## 公开代码根目录
 
@@ -31,17 +31,3 @@ python3 web/server.py --host 127.0.0.1 --port 4173 --pollution-demo
 ```
 
 固件和 ROS2 的入口、部署参数、安全链及测试命令见 [`SUBMISSION_GUIDE.md`](SUBMISSION_GUIDE.md)。
-
-## 竞赛目录
-
-```powershell
-pwsh -File tools/build_submission_package.ps1 `
-  -SchoolName $env:SUBMISSION_SCHOOL_NAME `
-  -CaptainName $env:SUBMISSION_CAPTAIN_NAME
-```
-
-工程上一级目录是竞赛提交根目录，打开后只显示 `01_作品文件/` 至 `07_过程记录/` 七个目录和 `暂时存放/`。其中 `06_源文件/` 就是本 Git 工作区；报告、素材、参考文件、日志和迁移备份统一放在 `暂时存放/`，不进入 GitHub 代码仓库。
-
-竞赛材料使用 `01_作品文件/` 至 `07_过程记录/` 七个提交目录；`暂时存放/` 不属于提交材料。代码仓库不记录未公开的报名身份信息。
-
-迁移基线、重复内层仓库备份、阶段记录和验收结果保存在上一级 `暂时存放/logs_backup/`。

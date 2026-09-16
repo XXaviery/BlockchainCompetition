@@ -6,7 +6,7 @@
 
 ## 1. 安装
 
-从 `06_源文件` Git 工作区进入本目录：
+从 Git 工作区根目录进入本目录：
 
 ```powershell
 Set-Location code/software
@@ -142,4 +142,4 @@ scripts/train_risk_model.py
 scripts/train_ranker.py
 ```
 
-竞赛提交封装与 smoke test 不调用这些脚本。
+运行封装脚本与 smoke test 不调用这些脚本。

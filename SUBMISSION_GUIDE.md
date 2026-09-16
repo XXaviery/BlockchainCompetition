@@ -1,20 +1,18 @@
 # 智驭新风——基于环境风险预测与安全任务调度的移动空气治理机器人：代码安装与运行说明
 
-本文件只说明代码工程、部署参数和检查方法；报告 DOCX 不属于本代码工程。
+本文件只说明代码工程、部署参数和检查方法。
 
 ## 1. 工程边界
 
-本文件位于 `06_源文件/` Git 工作区。竞赛根目录下的公开源码路径固定为：
+以下路径以当前 Git 工作区根目录为基准：
 
-- `06_源文件/code/software/`：唯一 Python 软件工程根目录。
-- `06_源文件/code/robot/`：唯一硬件、ROS2 和 Web 源码根目录。
-- `06_源文件/code/robot/firmware/`：ESP32 固件。
-- `06_源文件/code/robot/ros2_ws/src/mof_esp32_bridge/`：ROS2 技术包；包名保持为 `mof_esp32_bridge`。
-- `06_源文件/code/robot/web/`：Web 控制台和污染态势仿真演示。
+- `code/software/`：唯一 Python 软件工程根目录。
+- `code/robot/`：唯一硬件、ROS2 和 Web 源码根目录。
+- `code/robot/firmware/`：ESP32 固件。
+- `code/robot/ros2_ws/src/mof_esp32_bridge/`：ROS2 技术包；包名保持为 `mof_esp32_bridge`。
+- `code/robot/web/`：Web 控制台和污染态势仿真演示。
 
-竞赛根目录的 `01_作品文件/` 至 `07_过程记录/` 是提交目录；`暂时存放/` 用于保存报告、素材、参考文件、日志和迁移备份。`暂时存放/` 不属于竞赛提交材料，也不属于 GitHub 代码仓库。
-
-以下命令在 `06_源文件/` 工作区内执行，因此命令中的 `code/software/` 和 `code/robot/` 是工作区相对路径。
+以下命令从 Git 工作区根目录执行，命令中的 `code/software/` 和 `code/robot/` 是工作区相对路径。
 
 ## 2. Python 软件
 
@@ -52,7 +50,7 @@ air-governance-export-evidence --root .
 python -m pytest -q
 ```
 
-`air-governance-export-evidence` 是既有证据导出入口；报告内容和 DOCX 生成不属于该命令的运行范围。
+`air-governance-export-evidence` 生成现有运行证据文件。
 
 ### 可移植路径
 
@@ -140,37 +138,6 @@ GET /api/pollution/snapshot?scenario_id=scenario_1_pm25_spike&step=0&metric=pm25
 
 带 ROS 的既有模式仍按 `code/robot/web/README.md` 使用：`--motion-only`、`--playback-only` 和 `--console`。运动控制令牌、序列号校验、300 ms 看门狗、BagManager 和既有安全链不因污染演示改变。
 
-## 6. 竞赛提交目录
-
-封装脚本创建以下七个目录：
-
-```text
-01_作品文件/
-02_作品展示/
-03_设计文档/
-04_作品信息/
-05_承诺书/
-06_源文件/
-07_过程记录/
-```
-
-竞赛根目录固定为：
-
-```text
-01_作品文件/
-02_作品展示/
-03_设计文档/
-04_作品信息/
-05_承诺书/
-06_源文件/       ← 本 Git 工作区
-07_过程记录/
-暂时存放/        ← 本地材料与备份，不提交
-```
-
-报名身份信息以正式提交材料为准，代码工作区不记录未公开的身份信息。Git 工作区仅包含公开代码、运行说明和必要的源码工程文件，不包含报告、素材、日志、恢复目录、构建产物、历史数据库、MCAP、固件备份、`start_pi.sh` 或重复内层仓库。
-
-封装脚本在竞赛根目录检查七个两位数字目录，并把状态说明和文件清单写入 `07_过程记录/`。`.git` 位于 `06_源文件/`，不在竞赛根目录。
-
-## 7. 冻结与验收边界
+## 6. 冻结与验收边界
 
 安装和检查命令不重新训练模型、不生成新的仿真数据、不改变现有模型版本、指标数值、日志字段或输出文件名。RiskModel、RankerModel、RuleBasedPolicy、SafetySupervisor、TaskManager、TaskStateMachine、Mock adapters、ROS 安全链以及 `firmware/` 的运动学/PID/串口/雷达逻辑均保持冻结。当前 ROS2 `setup.py` 不声明 `send_velocity_frame`；包内没有对应源码入口。
