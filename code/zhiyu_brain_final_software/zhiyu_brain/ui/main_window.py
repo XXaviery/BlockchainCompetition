@@ -38,7 +38,7 @@ class MainWindow:
     def _build(self):
         header = ttk.Frame(self.root, padding=(12, 8)); header.pack(fill="x")
         ttk.Label(header, text="智驭新风", font=("Arial", 20, "bold")).pack(side="left")
-        ttk.Label(header, text="多源环境感知与自主决策的移动空气治理机器人 | 软件在环", foreground="#555").pack(side="left", padx=16)
+        ttk.Label(header, text="环境风险预测与安全任务调度的移动空气治理机器人 | 软件在环", foreground="#555").pack(side="left", padx=16)
         self.cycle_var = tk.StringVar(value="completed_cycles=0")
         ttk.Label(header, textvariable=self.cycle_var).pack(side="right")
 

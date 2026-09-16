@@ -6,7 +6,7 @@ from services.gui_backend import GuiBackend
 
 
 def main() -> int:
-    parser=argparse.ArgumentParser(description='智驭新风上位机与可视化演示系统')
+    parser=argparse.ArgumentParser(description='智驭新风环境风险预测与安全任务调度上位机演示系统')
     parser.add_argument('--demo',action='store_true')
     parser.add_argument('--demo-headless',action='store_true')
     add_root_argument(parser)

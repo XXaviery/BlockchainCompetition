@@ -17,6 +17,13 @@
 !/tools/ros_manual_translation_test.py
 !/tools/ros_relative_ab_a_supervisor.py
 !/tools/web_console_acceptance.py
+!/tools/start_mof_web_console.sh
+!/tools/run_mof_web_console_remote.sh
+!/tools/ros_direct_wheel_basic_supervisor.py
+!/tools/ros_wasd_passive_monitor.py
+!/tools/chassis_feedback_safety_host_test.cpp
+!/tools/host_stubs/
+!/tools/host_stubs/**
 
 !/catkin_ws/
 !/catkin_ws/**
@@ -44,6 +51,9 @@
 Thumbs.db
 *.swp
 *.swo
+
+# Local deployment launcher contains machine credentials and stays outside Git.
+/start_pi.sh
 
 .claude
 .codex

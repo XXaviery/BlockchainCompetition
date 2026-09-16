@@ -6,7 +6,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$workName = '智驭新风——基于多源环境感知与自主决策的移动空气治理机器人'
+$workName = '智驭新风——基于环境风险预测与安全任务调度的移动空气治理机器人'
 $invalidNameChars = [IO.Path]::GetInvalidFileNameChars()
 foreach ($value in @($SchoolName, $CaptainName)) {
     if ([string]::IsNullOrWhiteSpace($value) -or $value.IndexOfAny($invalidNameChars) -ge 0) {
@@ -124,6 +124,9 @@ function Get-InclusionDecision {
     if ($File.Name.StartsWith('~$') -or $File.Name.EndsWith('~')) {
         return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = '临时文件' }
     }
+    if ($SourceKind -eq 'hardware' -and $relative -in @('start_pi.sh', 'advise.md', 'SKILL.md', 'mof_room.pgm')) {
+        return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = '本地部署或工作区辅助文件，不进入公开代码证据包' }
+    }
     if ($excludedExtensions -contains $File.Extension.ToLowerInvariant()) {
         return [pscustomobject]@{ Include = $false; Relative = $relative; Reason = "排除扩展名 $($File.Extension)" }
     }
@@ -192,6 +195,8 @@ $exclusionSummary = @'
 - 大体积或设备产物：`*.mcap`、固件备份目录 `backups/`、固件备份 `*.bin/*.elf/*.hex/*.uf2`、`*.log`。
 - 临时与渲染产物：`~$*`、`*~`、`*.tmp/*.temp/*.bak/*.old/*.swp/*.swo`、render 类目录。
 - 重复内层仓库：硬件源码根下的 `code/`，即原目录 `code/code/code/`；原目录未删除。
+- 本地部署入口：`start_pi.sh` 含设备登录凭据，不进入公开代码证据包；原文件保留在本地。
+- 工作区辅助文件：硬件根目录下的 `advise.md`、`SKILL.md`、`mof_room.pgm` 不属于公开源码。
 '@
 $exclusionSummary = $exclusionSummary.Replace(
     '实际逐文件排除结果见 `排除文件清单.tsv`。',

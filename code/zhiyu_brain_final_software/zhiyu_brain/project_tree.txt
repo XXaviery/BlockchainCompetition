@@ -1,3 +1,6 @@
+# Python 工程目录说明（本地工作区快照）
+# `codex/`、`outputs/` 及其下运行产物属于本地工作区目录，不进入 GitHub 代码树或源码 ZIP。
+
 README.md
 app/
 brain_architecture.md
